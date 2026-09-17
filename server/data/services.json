@@ -1,0 +1,62 @@
+[
+  {
+    "id": "srv-1",
+    "name": "Plumbing & Pipe Fix",
+    "nameHindi": "प्लंंबिंग और पाइप मरम्मत",
+    "category": "Plumbing",
+    "icon": "Wrench",
+    "basePrice": 350,
+    "description": "Fix tap leaks, pipe bursts, bathroom fittings and drain blockages.",
+    "popular": true
+  },
+  {
+    "id": "srv-2",
+    "name": "Electrical & Wiring",
+    "nameHindi": "बिजली और वायरिंग कार्य",
+    "category": "Electrical",
+    "icon": "Zap",
+    "basePrice": 300,
+    "description": "Short circuit repairs, switchboard installation, fan & light fitting.",
+    "popular": true
+  },
+  {
+    "id": "srv-3",
+    "name": "Full House Cleaning",
+    "nameHindi": "पूरे घर की सफाई",
+    "category": "Cleaning",
+    "icon": "Sparkles",
+    "basePrice": 800,
+    "description": "Deep cleaning for 2BHK/3BHK homes, kitchen degreasing & floor scrubbing.",
+    "popular": true
+  },
+  {
+    "id": "srv-4",
+    "name": "AC & Appliance Repair",
+    "nameHindi": "एसी और घरेलू उपकरण मरम्मत",
+    "category": "Appliance",
+    "icon": "Tv",
+    "basePrice": 500,
+    "description": "AC servicing, gas filling, refrigerator & washing machine diagnosis.",
+    "popular": false
+  },
+  {
+    "id": "srv-5",
+    "name": "Carpentry & Furniture",
+    "nameHindi": "बढ़ईगीरी और फर्नीचर कार्य",
+    "category": "Carpentry",
+    "icon": "Hammer",
+    "basePrice": 400,
+    "description": "Door latch repairs, furniture assembly, custom shelving and lock fixes.",
+    "popular": false
+  },
+  {
+    "id": "srv-6",
+    "name": "Sanitation & Pest Control",
+    "nameHindi": "कीट नियंत्रण और सेनेटाइजेशन",
+    "category": "Cleaning",
+    "icon": "ShieldCheck",
+    "basePrice": 650,
+    "description": "Herbal termite treatment, cockroach control, disinfectant spraying.",
+    "popular": false
+  }
+]

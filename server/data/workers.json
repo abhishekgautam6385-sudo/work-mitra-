@@ -1,0 +1,140 @@
+[
+  {
+    "id": "wrk-101",
+    "name": "Rahul Sharma",
+    "nameHindi": "राहुल शर्मा",
+    "phone": "+91 98765 43210",
+    "cooperative": "Delhi Rural Skilled Workers Cooperative",
+    "skills": ["Plumbing", "Sanitation"],
+    "experienceYears": 5,
+    "rating": 4.85,
+    "totalReviews": 124,
+    "jobsCompletedThisMonth": 6,
+    "status": "Available",
+    "verificationStatus": "VERIFIED",
+    "badges": ["Master Plumber", "Verified Cooperative Member", "Top Rated"],
+    "insuranceActive": true,
+    "welfareBalance": 2450,
+    "location": {
+      "city": "New Delhi",
+      "area": "Dwarka Sec 12",
+      "lat": 28.5921,
+      "lng": 77.046
+    }
+  },
+  {
+    "id": "wrk-102",
+    "name": "Amit Verma",
+    "nameHindi": "अमित वर्मा",
+    "phone": "+91 98112 33445",
+    "cooperative": "Delhi Rural Skilled Workers Cooperative",
+    "skills": ["Electrical", "Appliance"],
+    "experienceYears": 3,
+    "rating": 4.65,
+    "totalReviews": 98,
+    "jobsCompletedThisMonth": 14,
+    "status": "Available",
+    "verificationStatus": "VERIFIED",
+    "badges": ["Certified Electrician", "Verified Cooperative Member"],
+    "insuranceActive": true,
+    "welfareBalance": 1800,
+    "location": {
+      "city": "New Delhi",
+      "area": "Janakpuri",
+      "lat": 28.6219,
+      "lng": 77.0878
+    }
+  },
+  {
+    "id": "wrk-103",
+    "name": "Suresh Kumar",
+    "nameHindi": "सुरेश कुमार",
+    "phone": "+91 97123 45678",
+    "cooperative": "Noida Household Services Federation",
+    "skills": ["Cleaning", "Sanitation"],
+    "experienceYears": 6,
+    "rating": 4.78,
+    "totalReviews": 150,
+    "jobsCompletedThisMonth": 4,
+    "status": "Available",
+    "verificationStatus": "VERIFIED",
+    "badges": ["Hygiene Specialist", "Verified Cooperative Member"],
+    "insuranceActive": true,
+    "welfareBalance": 3100,
+    "location": {
+      "city": "Noida",
+      "area": "Sector 62",
+      "lat": 28.628,
+      "lng": 77.3649
+    }
+  },
+  {
+    "id": "wrk-104",
+    "name": "Pooja Devi",
+    "nameHindi": "पूजा देवी",
+    "phone": "+91 99554 11223",
+    "cooperative": "Noida Household Services Federation",
+    "skills": ["Cleaning", "Appliance"],
+    "experienceYears": 4,
+    "rating": 4.92,
+    "totalReviews": 86,
+    "jobsCompletedThisMonth": 5,
+    "status": "Available",
+    "verificationStatus": "VERIFIED",
+    "badges": ["Women Artisan Guild", "Punctual Expert"],
+    "insuranceActive": true,
+    "welfareBalance": 2900,
+    "location": {
+      "city": "Noida",
+      "area": "Sector 18",
+      "lat": 28.5708,
+      "lng": 77.3261
+    }
+  },
+  {
+    "id": "wrk-105",
+    "name": "Ramesh Singh",
+    "nameHindi": "रमेश सिंह",
+    "phone": "+91 98990 87654",
+    "cooperative": "Gurugram Artisan & Service Union",
+    "skills": ["Carpentry", "Plumbing"],
+    "experienceYears": 7,
+    "rating": 4.70,
+    "totalReviews": 110,
+    "jobsCompletedThisMonth": 12,
+    "status": "Busy",
+    "verificationStatus": "VERIFIED",
+    "badges": ["Master Carpenter"],
+    "insuranceActive": false,
+    "welfareBalance": 1200,
+    "location": {
+      "city": "Gurugram",
+      "area": "DLF Phase 3",
+      "lat": 28.4908,
+      "lng": 77.0947
+    }
+  },
+  {
+    "id": "wrk-106",
+    "name": "Vikas Yadav",
+    "nameHindi": "विकास यादव",
+    "phone": "+91 98441 22334",
+    "cooperative": "Delhi Rural Skilled Workers Cooperative",
+    "skills": ["Plumbing"],
+    "experienceYears": 2,
+    "rating": 4.5,
+    "totalReviews": 18,
+    "jobsCompletedThisMonth": 2,
+    "status": "Available",
+    "verificationStatus": "PENDING_VERIFICATION",
+    "badges": ["Newly Onboarded"],
+    "insuranceActive": false,
+    "welfareBalance": 0,
+    "location": {
+      "city": "New Delhi",
+      "area": "Uttam Nagar",
+      "lat": 28.621,
+      "lng": 77.054
+    }
+  }
+]

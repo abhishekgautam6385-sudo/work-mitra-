@@ -1,0 +1,36 @@
+[
+  {
+    "id": "BK-2026-8801",
+    "customerName": "Sunita Aggarwal",
+    "customerPhone": "+91 98100 12345",
+    "customerAddress": "Flat 402, Green Glen Apartments, Dwarka Sector 12, New Delhi",
+    "serviceId": "srv-1",
+    "serviceName": "Plumbing & Pipe Fix",
+    "category": "Plumbing",
+    "amount": 350,
+    "cooperativeFee": 17.5,
+    "welfareFundContribution": 10,
+    "workerId": "wrk-101",
+    "workerName": "Rahul Sharma",
+    "workerPhone": "+91 98765 43210",
+    "status": "ASSIGNED",
+    "arrivalOtp": "4829",
+    "departureOtp": "9103",
+    "scheduledTime": "Today, 4:00 PM",
+    "beforeWorkPhoto": null,
+    "afterWorkPhoto": null,
+    "createdAt": "2026-09-16T22:30:00.000Z",
+    "timeline": [
+      {
+        "status": "CREATED",
+        "time": "10:00 PM",
+        "note": "Service booked by customer"
+      },
+      {
+        "status": "ASSIGNED",
+        "time": "10:02 PM",
+        "note": "Matched with Rahul Sharma via Fair Allocation Engine"
+      }
+    ]
+  }
+]

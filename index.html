@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WorkMitra - Cooperative Gig Services Platform (SIH089)</title>
+
+  <!-- PWA Manifest & Meta Tags -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0d9488">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="WorkMitra">
+  <link rel="icon" type="image/jpeg" href="logo.jpg">
+  <link rel="apple-touch-icon" href="logo.jpg">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Leaflet OpenStreetMap CSS & JS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-slate-50 min-h-screen flex flex-col antialiased selection:bg-emerald-500 selection:text-white pb-20">
+
+  <!-- TOP HEADER & BRANDING BAR -->
+  <header class="sticky top-0 z-40 glass-header border-b border-slate-200/80 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-2">
+      
+      <!-- Brand Logo -->
+      <div class="flex items-center gap-3 group cursor-pointer" onclick="setRole('customer')">
+        <div class="relative w-12 h-12 rounded-2xl overflow-hidden p-0.5 bg-gradient-to-tr from-emerald-600 via-teal-500 to-amber-400 shadow-lg shadow-emerald-600/25 group-hover:scale-105 transition-transform">
+          <img src="logo.jpg" alt="WorkMitra Logo" class="w-full h-full object-cover rounded-[14px]">
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-2xl font-extrabold text-slate-900 tracking-tight font-heading">Work<span class="brand-gradient-text">Mitra</span></h1>
+            <span class="px-2.5 py-0.5 text-[10px] font-extrabold bg-amber-100 text-amber-900 border border-amber-300 rounded-md shadow-xs">SIH 089</span>
+            <div id="network-status-badge"></div>
+          </div>
+          <p class="text-[11px] text-slate-500 font-medium hidden sm:block">Cooperative Gig Services Platform for Household & Community Services</p>
+        </div>
+      </div>
+
+      <!-- PWA Install & Demo Role Switcher Bar -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        
+        <!-- Global Multilingual Selector -->
+        <div class="bg-slate-100/90 p-1 rounded-2xl border border-slate-200/80 flex items-center gap-1 shadow-inner backdrop-blur-md">
+          <span class="text-[10px] font-bold text-slate-500 pl-2 hidden md:inline"><i class="fas fa-globe text-emerald-600"></i> भाषा / Lang:</span>
+          <button id="global-lang-hi" onclick="setGlobalLanguage('hi')" class="global-lang-btn px-2.5 py-1.5 text-xs font-extrabold rounded-xl transition-all bg-emerald-600 text-white shadow-sm flex items-center gap-1">
+            🇮🇳 <span class="hidden sm:inline">हिंदी</span><span class="sm:hidden">HI</span>
+          </button>
+          <button id="global-lang-en" onclick="setGlobalLanguage('en')" class="global-lang-btn px-2.5 py-1.5 text-xs font-bold rounded-xl transition-all text-slate-600 hover:bg-slate-200 flex items-center gap-1">
+            🇬🇧 <span class="hidden sm:inline">English</span><span class="sm:hidden">EN</span>
+          </button>
+          <button id="global-lang-hinglish" onclick="setGlobalLanguage('hinglish')" class="global-lang-btn px-2.5 py-1.5 text-xs font-bold rounded-xl transition-all text-slate-600 hover:bg-slate-200 flex items-center gap-1">
+            🇮🇳 <span class="hidden sm:inline">Hinglish</span><span class="sm:hidden">HG</span>
+          </button>
+        </div>
+
+        <!-- PWA Install Button Container -->
+        <div id="pwa-install-container"></div>
+
+        <!-- Role Switcher -->
+        <div class="bg-slate-100/90 p-1.5 rounded-2xl border border-slate-200/80 flex items-center gap-1 shadow-inner backdrop-blur-md">
+          <button id="role-customer" onclick="setRole('customer')" class="role-btn px-3 sm:px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-1.5 bg-emerald-600 text-white shadow-md">
+            <i class="fas fa-user-circle"></i> <span data-i18n="roleCustomer" class="hidden sm:inline">Customer</span>
+          </button>
+          <button id="role-worker" onclick="setRole('worker')" class="role-btn px-3 sm:px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-1.5 text-slate-600 hover:bg-slate-200">
+            <i class="fas fa-tools"></i> <span data-i18n="roleWorker" class="hidden sm:inline">Worker Portal</span>
+          </button>
+          <button id="role-admin" onclick="setRole('admin')" class="role-btn px-3 sm:px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-1.5 text-slate-600 hover:bg-slate-200">
+            <i class="fas fa-building-columns"></i> <span data-i18n="roleAdmin" class="hidden sm:inline">Cooperative Admin</span>
+          </button>
+        </div>
+
+        <!-- User Authentication & Session Badge -->
+        <div id="user-header-auth" class="flex items-center gap-2">
+          <!-- Injected by app.js -->
+        </div>
+
+      </div>
+
+    </div>
+  </header>
+
+  <!-- MAIN VIEW CONTAINER -->
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+    <!-- ========================================================= -->
+    <!-- 1. CUSTOMER VIEW -->
+    <!-- ========================================================= -->
+    <section id="customer-view" class="space-y-8 animate-fade-in">
+      
+      <!-- Customer Hero Banner -->
+      <div class="relative overflow-hidden bg-gradient-to-br from-slate-900 via-teal-950 to-emerald-950 rounded-3xl p-8 sm:p-10 text-white shadow-2xl border border-emerald-700/30">
+        <div class="absolute -right-10 -bottom-10 w-96 h-96 bg-emerald-500/15 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -left-10 -top-10 w-72 h-72 bg-amber-500/10 rounded-full blur-2xl pointer-events-none"></div>
+
+        <div class="relative z-10 max-w-3xl">
+          <div class="flex flex-wrap items-center gap-2 mb-4">
+            <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-extrabold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 backdrop-blur-md">
+              <i class="fas fa-award text-amber-400"></i> <span data-i18n="heroBadge">Empowering Cooperative Skilled Artisans & Workers</span>
+            </span>
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold bg-amber-400/20 text-amber-300 border border-amber-400/30">
+              <i class="fas fa-shield-heart"></i> <span data-i18n="fairWagesBadge">100% Fair Wages</span>
+            </span>
+          </div>
+          
+          <h2 data-i18n="heroTitle" class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight font-heading">
+            Book Verified Cooperative Workers for Household Services
+          </h2>
+          <p data-i18n="heroDesc" class="mt-4 text-slate-300 text-sm sm:text-base leading-relaxed max-w-2xl">
+            Directly connect with certified plumbers, electricians, housekeepers & artisans registered under transparent community cooperatives. Zero hidden middleman commissions.
+          </p>
+
+          <!-- Live Metrics Pill Row -->
+          <div class="mt-6 pt-4 border-t border-slate-800/80 flex flex-wrap gap-6 text-slate-300 text-xs">
+            <div>
+              <span class="block text-2xl font-black text-emerald-400 font-heading">500+</span>
+              <span data-i18n="statVerified" class="text-slate-400 font-medium">Verified Artisans</span>
+            </div>
+            <div class="w-px h-8 bg-slate-800 self-center hidden sm:block"></div>
+            <div>
+              <span class="block text-2xl font-black text-amber-400 font-heading">₹0</span>
+              <span data-i18n="statMiddlemanFees" class="text-slate-400 font-medium">Middleman Fees</span>
+            </div>
+            <div class="w-px h-8 bg-slate-800 self-center hidden sm:block"></div>
+            <div>
+              <span class="block text-2xl font-black text-sky-400 font-heading">98.4%</span>
+              <span data-i18n="statSatisfaction" class="text-slate-400 font-medium">Satisfaction Rate</span>
+            </div>
+          </div>
+
+          <div class="mt-6 flex flex-wrap gap-3 text-xs font-semibold">
+            <div class="flex items-center gap-2 bg-white/10 px-3.5 py-2 rounded-xl border border-white/10 backdrop-blur-md">
+              <i class="fas fa-mobile-screen-button text-amber-400"></i> Progressive Web App (PWA)
+            </div>
+            <div class="flex items-center gap-2 bg-white/10 px-3.5 py-2 rounded-xl border border-white/10 backdrop-blur-md">
+              <i class="fas fa-scale-balanced text-emerald-400"></i> AI Fair Workload Engine
+            </div>
+            <div class="flex items-center gap-2 bg-white/10 px-3.5 py-2 rounded-xl border border-white/10 backdrop-blur-md">
+              <i class="fas fa-key text-sky-400"></i> Dual OTP Work Security
+            </div>
+            <div class="flex items-center gap-2 bg-white/10 px-3.5 py-2 rounded-xl border border-white/10 backdrop-blur-md">
+              <i class="fas fa-heart-pulse text-rose-400"></i> Worker Welfare Fund
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+
+      <!-- Service Category Filter Bar -->
+      <div class="flex items-center justify-between gap-4 overflow-x-auto pb-2 scrollbar-none">
+        <div class="flex items-center gap-2">
+          <button onclick="filterCategory('All')" class="cat-pill px-4 py-2 text-xs font-bold rounded-xl transition-all bg-emerald-700 text-white shadow-sm" data-i18n="catAll">All Services</button>
+          <button onclick="filterCategory('Plumbing')" class="cat-pill px-4 py-2 text-xs font-bold rounded-xl transition-all bg-slate-100 text-slate-700 hover:bg-slate-200" data-i18n="catPlumbing">Plumbing</button>
+          <button onclick="filterCategory('Electrical')" class="cat-pill px-4 py-2 text-xs font-bold rounded-xl transition-all bg-slate-100 text-slate-700 hover:bg-slate-200" data-i18n="catElectrical">Electrical</button>
+          <button onclick="filterCategory('Cleaning')" class="cat-pill px-4 py-2 text-xs font-bold rounded-xl transition-all bg-slate-100 text-slate-700 hover:bg-slate-200" data-i18n="catCleaning">Cleaning</button>
+          <button onclick="filterCategory('Appliance')" class="cat-pill px-4 py-2 text-xs font-bold rounded-xl transition-all bg-slate-100 text-slate-700 hover:bg-slate-200" data-i18n="catAppliance">Appliance Repair</button>
+          <button onclick="filterCategory('Carpentry')" class="cat-pill px-4 py-2 text-xs font-bold rounded-xl transition-all bg-slate-100 text-slate-700 hover:bg-slate-200" data-i18n="catCarpentry">Carpentry</button>
+          <button onclick="filterCategory('Painting')" class="cat-pill px-4 py-2 text-xs font-bold rounded-xl transition-all bg-slate-100 text-slate-700 hover:bg-slate-200">Wall Painting</button>
+          <button onclick="filterCategory('Gardening')" class="cat-pill px-4 py-2 text-xs font-bold rounded-xl transition-all bg-slate-100 text-slate-700 hover:bg-slate-200">Gardening & Lawn</button>
+        </div>
+      </div>
+
+      <!-- Service Catalog & Interactive Map Layout -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        <!-- Services Cards Grid -->
+        <div class="lg:col-span-2">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="font-extrabold text-xl text-slate-900">Select Service Category</h3>
+            <span class="text-xs text-slate-500 font-medium">6 Services Available</span>
+          </div>
+          <div id="services-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Services injected by JS -->
+          </div>
+        </div>
+
+        <!-- Active Bookings & Live Map Section -->
+        <div class="lg:col-span-1 space-y-6">
+          
+          <!-- CUSTOMER MONTHLY & YEARLY REWARDS & GIFT DASHBOARD -->
+          <div class="bg-gradient-to-br from-amber-500/10 via-amber-500/5 to-white rounded-3xl p-5 border border-amber-200/90 shadow-sm space-y-4">
+            <div class="flex items-center justify-between pb-3 border-b border-amber-100">
+              <div class="flex items-center gap-2">
+                <div class="w-10 h-10 rounded-2xl bg-amber-500 text-white flex items-center justify-center text-lg shadow-md">
+                  <i class="fas fa-gift"></i>
+                </div>
+                <div>
+                  <h4 class="font-extrabold text-slate-900 text-sm font-heading">Customer Rewards & Gifts</h4>
+                  <span class="text-[10px] text-amber-800 font-bold">Monthly Loyalty Coins & Festive Gift Box</span>
+                </div>
+              </div>
+              <span class="px-2.5 py-1 text-[10px] font-black bg-amber-400 text-slate-950 rounded-full shadow-xs">
+                <i class="fas fa-crown text-slate-900 mr-1"></i> GOLD CITIZEN
+              </span>
+            </div>
+
+            <!-- Monthly Rewards Grid -->
+            <div class="grid grid-cols-2 gap-2 text-xs">
+              <div class="p-3 bg-white rounded-2xl border border-amber-200/80 shadow-xs">
+                <span class="text-[10px] font-bold text-slate-500 block">Monthly Mitra Coins</span>
+                <span class="text-lg font-black text-amber-600 font-heading flex items-center gap-1">
+                  <i class="fas fa-coins text-amber-500"></i> 350 Coins
+                </span>
+                <span class="text-[9px] text-emerald-700 font-bold block mt-0.5">Worth ₹350 Discount</span>
+              </div>
+              <div class="p-3 bg-white rounded-2xl border border-amber-200/80 shadow-xs">
+                <span class="text-[10px] font-bold text-slate-500 block">Monthly Savings Bonus</span>
+                <span class="text-lg font-black text-emerald-600 font-heading">₹450 Cashback</span>
+                <span class="text-[9px] text-slate-500 block mt-0.5">Zero Middleman Savings</span>
+              </div>
+            </div>
+
+            <!-- Yearly Festive Gift Unlocked Banner -->
+            <div class="p-3.5 bg-gradient-to-r from-amber-500 to-amber-600 rounded-2xl text-slate-950 font-medium shadow-md flex items-center justify-between">
+              <div class="text-white">
+                <span class="text-[10px] font-black uppercase tracking-wider block text-amber-200">🎁 Yearly Festive Gift Unlocked</span>
+                <span class="text-xs font-black block mt-0.5">Cooperative Artisanal Festive Box</span>
+                <span class="text-[10px] opacity-90 block">Organic Honey, Towel Set & Brass Diya</span>
+              </div>
+              <button onclick="alert('🎁 Congratulations! Your Yearly Festive Gift Hamper has been claimed and will be delivered by your local cooperative worker!')" class="px-3 py-1.5 bg-slate-950 hover:bg-slate-900 text-amber-300 font-extrabold text-[11px] rounded-xl shadow-sm transition-all transform active:scale-95 whitespace-nowrap">
+                Claim Gift
+              </button>
+            </div>
+          </div>
+
+          <!-- Live Interactive Map Card -->
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm">
+            <div class="flex items-center justify-between mb-3">
+              <h4 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+                <i class="fas fa-map-location-dot text-emerald-600"></i> Nearby Cooperative Workers
+              </h4>
+              <span class="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full">Dwarka Sector 12</span>
+            </div>
+            <div id="customer-map" class="h-56 w-full rounded-xl border border-slate-200"></div>
+          </div>
+
+          <!-- Active Bookings & OTP Tracker -->
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm">
+            <h4 class="font-bold text-slate-800 text-sm mb-3 flex items-center gap-2">
+              <i class="fas fa-clock-rotate-left text-emerald-600"></i> Active Bookings & OTP Security
+            </h4>
+            <div id="active-bookings-list" class="space-y-4">
+              <!-- Active bookings injected by JS -->
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ========================================================= -->
+    <!-- 2. WORKER PORTAL VIEW -->
+    <!-- ========================================================= -->
+    <section id="worker-view" class="space-y-6 hidden animate-fade-in">
+      
+      <!-- Worker Header with Language Toggle -->
+      <div class="bg-slate-900 text-white rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-4 shadow-xl border border-slate-800">
+        <div>
+          <span class="px-2.5 py-1 text-[10px] font-extrabold bg-amber-400 text-slate-900 rounded-md">WORKER APP INTERFACE</span>
+          <h2 class="text-2xl font-bold mt-1">कार्यकर्ता डैशबोर्ड (Worker Hub)</h2>
+          <p class="text-xs text-slate-400">Manage incoming jobs, verify OTPs, track earnings & insurance.</p>
+        </div>
+
+        <!-- Multilingual Language Toggle Button -->
+        <div class="flex items-center gap-2 bg-slate-800 p-1.5 rounded-xl border border-slate-700">
+          <span class="text-xs text-slate-400 font-semibold px-2">भाषा / Lang:</span>
+          <button id="lang-hi" onclick="setWorkerLang('hi')" class="px-3 py-1.5 text-xs font-bold rounded-lg bg-emerald-600 text-white transition-all">हिंदी (Hindi)</button>
+          <button id="lang-en" onclick="setWorkerLang('en')" class="px-3 py-1.5 text-xs font-bold rounded-lg text-slate-300 transition-all">English</button>
+        </div>
+      </div>
+
+      <!-- Worker Content Grid -->
+      <div id="worker-content">
+        <!-- Injected by app.js -->
+      </div>
+
+    </section>
+
+
+    <!-- ========================================================= -->
+    <!-- 3. COOPERATIVE FEDERATION ADMIN VIEW -->
+    <!-- ========================================================= -->
+    <section id="admin-view" class="space-y-6 hidden animate-fade-in">
+      
+      <!-- Admin Header -->
+      <div class="bg-gradient-to-r from-emerald-900 to-teal-900 text-white rounded-2xl p-6 shadow-xl flex flex-col md:flex-row items-center justify-between gap-4">
+        <div>
+          <span class="px-3 py-1 text-xs font-extrabold bg-emerald-400 text-slate-900 rounded-full">FEDERATION INTELLIGENCE DASHBOARD</span>
+          <h2 class="text-2xl font-bold mt-1">Cooperative Society Management</h2>
+          <p class="text-xs text-emerald-200">Worker verification, demand forecasting, welfare balance & fair workload analytics.</p>
+        </div>
+        <div class="flex gap-2">
+          <span class="px-3 py-2 bg-white/10 rounded-xl text-xs font-bold border border-white/20">
+            <i class="fas fa-building text-amber-300 mr-1"></i> Delhi Rural Skilled Workers Coop
+          </span>
+        </div>
+      </div>
+
+      <!-- Admin Content -->
+      <div id="admin-content">
+        <!-- Injected by app.js -->
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- MATCH RESULTS MODAL -->
+  <div id="match-modal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div id="match-modal-content" class="bg-white rounded-3xl max-w-2xl w-full shadow-2xl overflow-hidden border border-slate-100 animate-fade-in">
+      <!-- Injected by app.js -->
+    </div>
+  </div>
+
+  <!-- AUTHENTICATION & LOGIN/SIGNUP MODAL -->
+  <div id="auth-modal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div id="auth-modal-content" class="bg-white rounded-3xl max-w-md w-full shadow-2xl overflow-hidden border border-slate-100 animate-fade-in">
+      <!-- Injected by app.js -->
+    </div>
+  </div>
+
+  <!-- FLOATING SIH PRESENTATION QUICK DEMO BAR -->
+  <div class="fixed bottom-3 left-1/2 -translate-x-1/2 z-50 bg-slate-900/90 text-white backdrop-blur-md px-4 py-2.5 rounded-full border border-slate-700 shadow-2xl flex items-center gap-3 text-xs">
+    <span class="font-extrabold text-amber-400 flex items-center gap-1.5">
+      <i class="fas fa-wand-magic-sparkles"></i> SIH Demo Control:
+    </span>
+    <button onclick="simulateQuickBooking()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 font-bold rounded-full transition-colors">
+      1. Trigger Fair Match
+    </button>
+    <button onclick="simulateArrivalOtp()" class="px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold rounded-full transition-colors">
+      2. Verify Arrival OTP
+    </button>
+    <button onclick="simulateWorkCompletion()" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 font-bold rounded-full transition-colors">
+      3. Complete Work & Welfare
+    </button>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- WORKMITRA VOICE & AI ASSISTANT CHATBOT WIDGET (SIH 089) -->
+  <!-- ========================================================= -->
+  
+  <!-- Floating Toggle Button (Bottom Right) -->
+  <div class="fixed bottom-5 right-5 z-50 flex items-center gap-2">
+    <button id="voice-assistant-toggle" onclick="toggleVoiceAssistant()" class="group relative flex items-center gap-3 bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 hover:from-emerald-500 hover:to-cyan-500 text-white px-4 py-3 rounded-full shadow-2xl border border-emerald-400/40 transition-all hover:scale-105 active:scale-95">
+      <span class="relative flex h-3.5 w-3.5">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-3.5 w-3.5 bg-amber-400"></span>
+      </span>
+      <i class="fas fa-microphone-lines text-lg text-amber-300 group-hover:rotate-12 transition-transform"></i>
+      <span class="font-extrabold text-xs tracking-wide font-heading">Mitra Voice AI / मित्र असिस्टेंट</span>
+    </button>
+  </div>
+
+  <!-- Voice Assistant Chat Window Modal / Drawer -->
+  <div id="voice-assistant-panel" class="fixed bottom-20 right-5 z-50 w-[92vw] sm:w-[420px] max-h-[600px] h-[540px] bg-slate-950/95 backdrop-blur-2xl rounded-3xl border border-emerald-500/30 shadow-2xl flex flex-col overflow-hidden transition-all duration-300 transform translate-y-10 opacity-0 pointer-events-none">
+    
+    <!-- Chat Header -->
+    <div class="bg-gradient-to-r from-slate-900 via-teal-950 to-slate-900 p-4 border-b border-emerald-500/20 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="relative w-10 h-10 rounded-2xl bg-gradient-to-tr from-emerald-500 to-amber-400 p-0.5 shadow-md">
+          <div class="w-full h-full bg-slate-900 rounded-[14px] flex items-center justify-center text-amber-400">
+            <i class="fas fa-robot text-lg animate-pulse"></i>
+          </div>
+          <span class="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-emerald-500 border-2 border-slate-900 rounded-full"></span>
+        </div>
+        <div>
+          <div class="flex items-center gap-1.5">
+            <h3 class="font-extrabold text-sm text-white font-heading">Mitra AI Voice Assistant</h3>
+            <span class="text-[9px] font-black bg-emerald-500/20 text-emerald-300 px-1.5 py-0.5 rounded border border-emerald-500/30">Hindi / English</span>
+          </div>
+          <p id="assistant-status-subtitle" class="text-[11px] text-slate-400 flex items-center gap-1">
+            <i class="fas fa-circle text-[8px] text-emerald-400"></i> Voice Ready (बोलिए या टाइप करें)
+          </p>
+        </div>
+      </div>
+      
+      <div class="flex items-center gap-1.5">
+        <!-- Sound Output Toggle Button -->
+        <button id="tts-toggle-btn" onclick="toggleVoiceTTS()" title="Voice Response Sound On/Off" class="w-8 h-8 rounded-xl bg-slate-800 text-emerald-400 hover:bg-slate-700 flex items-center justify-center transition-colors">
+          <i class="fas fa-volume-high text-xs"></i>
+        </button>
+        <!-- Close Button -->
+        <button onclick="toggleVoiceAssistant()" title="Close Assistant" class="w-8 h-8 rounded-xl bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700 flex items-center justify-center transition-colors">
+          <i class="fas fa-xmark"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Live Voice Waveform Bar (shown when listening) -->
+    <div id="voice-wave-container" class="hidden bg-emerald-950/60 border-b border-emerald-500/30 px-4 py-2 flex items-center justify-between">
+      <div class="flex items-center gap-2 text-emerald-300 text-xs font-semibold">
+        <i class="fas fa-microphone text-rose-400 animate-pulse"></i>
+        <span id="listening-text-status">Listening... Speak now / बोलिए...</span>
+      </div>
+      <div class="flex items-end gap-1 h-5">
+        <span class="w-1 bg-emerald-400 rounded-full animate-bounce h-3"></span>
+        <span class="w-1 bg-amber-400 rounded-full animate-bounce h-5 delay-75"></span>
+        <span class="w-1 bg-emerald-400 rounded-full animate-bounce h-2 delay-150"></span>
+        <span class="w-1 bg-teal-400 rounded-full animate-bounce h-4 delay-100"></span>
+      </div>
+    </div>
+
+    <!-- Chat Messages Container -->
+    <div id="chat-messages" class="flex-grow p-4 overflow-y-auto space-y-3 text-xs">
+      <!-- Welcome Message Injected Dynamically -->
+    </div>
+
+    <!-- Quick Action Chips (Pre-built prompts) -->
+    <div class="px-3 py-2 bg-slate-900/80 border-t border-slate-800 flex items-center gap-1.5 overflow-x-auto scrollbar-none">
+      <button onclick="sendQuickPrompt('Plumber chahiye (Need Plumber)')" class="chip-btn whitespace-nowrap px-2.5 py-1 text-[11px] bg-slate-800 hover:bg-emerald-800 text-emerald-300 border border-emerald-700/50 rounded-full transition-colors flex items-center gap-1">
+        <i class="fas fa-wrench text-amber-400"></i> 🔧 Plumber
+      </button>
+      <button onclick="sendQuickPrompt('Electrician repair short circuit')" class="chip-btn whitespace-nowrap px-2.5 py-1 text-[11px] bg-slate-800 hover:bg-emerald-800 text-emerald-300 border border-emerald-700/50 rounded-full transition-colors flex items-center gap-1">
+        <i class="fas fa-bolt text-yellow-400"></i> ⚡ Electrician
+      </button>
+      <button onclick="sendQuickPrompt('House cleaning deep clean')" class="chip-btn whitespace-nowrap px-2.5 py-1 text-[11px] bg-slate-800 hover:bg-emerald-800 text-emerald-300 border border-emerald-700/50 rounded-full transition-colors flex items-center gap-1">
+        <i class="fas fa-broom text-cyan-400"></i> 🧹 Cleaning
+      </button>
+      <button onclick="sendQuickPrompt('Switch to worker portal')" class="chip-btn whitespace-nowrap px-2.5 py-1 text-[11px] bg-slate-800 hover:bg-emerald-800 text-emerald-300 border border-emerald-700/50 rounded-full transition-colors flex items-center gap-1">
+        <i class="fas fa-tools text-rose-400"></i> 👷 Worker App
+      </button>
+      <button onclick="sendQuickPrompt('What is WorkMitra welfare fund?')" class="chip-btn whitespace-nowrap px-2.5 py-1 text-[11px] bg-slate-800 hover:bg-emerald-800 text-emerald-300 border border-emerald-700/50 rounded-full transition-colors flex items-center gap-1">
+        <i class="fas fa-shield-heart text-pink-400"></i> 🛡️ Welfare Fund
+      </button>
+    </div>
+
+    <!-- Chat Input Controls -->
+    <div class="p-3 bg-slate-900 border-t border-emerald-500/20 flex items-center gap-2">
+      <!-- Voice Mic Button -->
+      <button id="mic-btn" onclick="toggleSpeechRecognition()" title="Click to Speak (Voice Assistant)" class="relative w-10 h-10 rounded-2xl bg-gradient-to-tr from-amber-500 to-emerald-500 text-slate-950 font-bold flex items-center justify-center shadow-lg hover:scale-105 active:scale-95 transition-all">
+        <i id="mic-icon" class="fas fa-microphone text-base"></i>
+      </button>
+
+      <!-- Text Input -->
+      <input id="chat-input" type="text" placeholder="Bolie ya type karein (Hindi/English)..." class="flex-grow bg-slate-950 border border-slate-700 focus:border-emerald-500 text-white placeholder-slate-500 px-3.5 py-2.5 rounded-xl text-xs outline-none transition-colors" onkeydown="if(event.key === 'Enter') handleUserSendMessage()">
+
+      <!-- Send Button -->
+      <button onclick="handleUserSendMessage()" class="w-10 h-10 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white flex items-center justify-center shadow-md transition-colors">
+        <i class="fas fa-paper-plane text-xs"></i>
+      </button>
+    </div>
+
+  </div>
+
+  <!-- App Core JS -->
+  <script src="app.js"></script>
+</body>
+</html>
