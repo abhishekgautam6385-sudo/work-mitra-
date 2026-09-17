@@ -157,8 +157,89 @@
     ::-webkit-scrollbar-track { background: #0a0f1e; }
     ::-webkit-scrollbar-thumb { background: #0d9488; border-radius: 99px; }
 
-    /* Mobile nav */
-    #mobile-menu { transition: max-height 0.3s ease, opacity 0.3s ease; }
+    /* ---- NAVBAR ---- */
+    #navbar {
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+    #navbar.scrolled {
+      background: rgba(8,12,24,0.97) !important;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.4);
+    }
+
+    /* Nav links */
+    .nav-link {
+      position: relative;
+      font-size: 14px;
+      font-weight: 600;
+      color: #94a3b8;
+      transition: color 0.2s ease;
+      padding: 6px 0;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #0d9488, #0ea5e9);
+      border-radius: 99px;
+      transition: width 0.25s ease;
+    }
+    .nav-link:hover { color: #e2e8f0; }
+    .nav-link:hover::after { width: 100%; }
+
+    /* Hamburger animation */
+    .hamburger-line {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: #e2e8f0;
+      border-radius: 99px;
+      transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+      transform-origin: center;
+    }
+    .menu-open .hamburger-line:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .menu-open .hamburger-line:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .menu-open .hamburger-line:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Mobile menu slide */
+    #mobile-menu {
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      transition: max-height 0.4s cubic-bezier(0.16,1,0.3,1), opacity 0.3s ease;
+    }
+    #mobile-menu.open {
+      max-height: 400px;
+      opacity: 1;
+    }
+
+    /* Mobile nav item */
+    .mobile-nav-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 12px 16px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #94a3b8;
+      border-radius: 12px;
+      border: none;
+      background: none;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s ease;
+    }
+    .mobile-nav-link:hover, .mobile-nav-link:active {
+      color: #e2e8f0;
+      background: rgba(255,255,255,0.05);
+    }
+    .mobile-nav-link i { width: 18px; text-align: center; color: #0d9488; }
 
     /* Step connector */
     .step-line::after {
@@ -196,56 +277,96 @@
 <body class="bg-mesh min-h-screen">
 
   <!-- ===================== NAV ===================== -->
-  <nav class="fixed top-0 left-0 right-0 z-50" style="background: rgba(10,15,30,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.06);">
+  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50" style="background: rgba(10,15,30,0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter:blur(20px); border-bottom: 1px solid rgba(255,255,255,0.06);">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-14 sm:h-16">
+      <div class="flex items-center justify-between h-14 sm:h-16 gap-4">
 
-        <!-- Logo -->
-        <div class="flex items-center gap-2 sm:gap-3 cursor-pointer" onclick="smoothTo('hero')">
-          <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl overflow-hidden p-0.5 bg-gradient-to-tr from-emerald-500 to-amber-400 flex-shrink-0">
-            <img src="logo.jpg" alt="WorkMitra" class="w-full h-full object-cover rounded-[10px]">
+        <!-- ---- LOGO ---- -->
+        <button onclick="smoothTo('hero')" class="flex items-center gap-2.5 flex-shrink-0" style="background:none;border:none;cursor:pointer;padding:0;">
+          <div style="width:38px;height:38px;border-radius:12px;overflow:hidden;padding:2px;background:linear-gradient(135deg,#10b981,#f59e0b);flex-shrink:0;">
+            <img src="logo.jpg" alt="WorkMitra Logo" style="width:100%;height:100%;object-fit:cover;border-radius:9px;">
           </div>
-          <div class="flex items-center gap-2">
-            <span class="text-lg sm:text-xl font-extrabold text-white font-heading leading-none">Work<span class="brand-text">Mitra</span></span>
-            <span class="px-1.5 py-0.5 text-[9px] font-extrabold bg-amber-400/20 text-amber-300 border border-amber-400/30 rounded-md hidden xs:inline-block">SIH 089</span>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span style="font-family:'Outfit',sans-serif;font-size:20px;font-weight:900;color:white;line-height:1;">Work<span class="brand-text">Mitra</span></span>
+            <span style="padding:2px 7px;font-size:9px;font-weight:800;background:rgba(245,158,11,0.15);color:#fbbf24;border:1px solid rgba(245,158,11,0.3);border-radius:6px;display:none;" id="sih-badge">SIH 089</span>
           </div>
+        </button>
+
+        <!-- ---- DESKTOP NAV LINKS (hidden on mobile) ---- -->
+        <div style="display:none;" id="desktop-nav" class="hidden md:flex items-center gap-1">
+          <button onclick="smoothTo('features')" class="nav-link px-3">Features</button>
+          <button onclick="smoothTo('how-it-works')" class="nav-link px-3">How It Works</button>
+          <button onclick="smoothTo('services')" class="nav-link px-3">Services</button>
+          <button onclick="smoothTo('testimonials')" class="nav-link px-3">Reviews</button>
         </div>
 
-        <!-- Desktop nav links -->
-        <div class="hidden md:flex items-center gap-6 text-sm font-semibold text-slate-300">
-          <button onclick="smoothTo('features')" class="hover:text-emerald-400 transition-colors">Features</button>
-          <button onclick="smoothTo('how-it-works')" class="hover:text-emerald-400 transition-colors">How It Works</button>
-          <button onclick="smoothTo('services')" class="hover:text-emerald-400 transition-colors">Services</button>
-          <button onclick="smoothTo('testimonials')" class="hover:text-emerald-400 transition-colors">Reviews</button>
-        </div>
+        <!-- ---- RIGHT: CTA + HAMBURGER ---- -->
+        <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
 
-        <!-- Desktop CTA -->
-        <div class="hidden md:flex items-center gap-3">
-          <button onclick="openLogin()" class="px-4 py-2 text-sm font-bold text-slate-300 hover:text-white transition-colors">Login</button>
-          <button onclick="openLogin()" class="cta-btn px-5 py-2 text-sm font-extrabold text-white rounded-xl shadow-lg">
-            Get Started <i class="fas fa-arrow-right ml-1.5 text-xs"></i>
+          <!-- Desktop CTA buttons (hidden on mobile) -->
+          <div id="desktop-cta" class="hidden md:flex items-center gap-2">
+            <button onclick="openLogin()" style="padding:8px 16px;font-size:13px;font-weight:700;color:#94a3b8;background:none;border:none;cursor:pointer;border-radius:10px;transition:all 0.2s;font-family:inherit;" onmouseover="this.style.color='#e2e8f0'" onmouseout="this.style.color='#94a3b8'">Login</button>
+            <button onclick="openLogin()" class="cta-btn" style="padding:10px 20px;font-size:13px;font-weight:800;color:white;border:none;border-radius:12px;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:6px;">
+              Get Started <i class="fas fa-arrow-right text-xs"></i>
+            </button>
+          </div>
+
+          <!-- Mobile Login button (only on mobile) -->
+          <button onclick="openLogin()" class="md:hidden cta-btn" style="padding:8px 14px;font-size:12px;font-weight:800;color:white;border:none;border-radius:10px;cursor:pointer;font-family:inherit;">
+            Login
+          </button>
+
+          <!-- Hamburger button (only on mobile) -->
+          <button id="hamburger-btn" onclick="toggleMobileMenu()" class="md:hidden" style="width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer;padding:9px;transition:background 0.2s;" aria-label="Toggle menu">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
           </button>
         </div>
 
-        <!-- Mobile Menu Button -->
-        <button onclick="toggleMobileMenu()" class="md:hidden w-9 h-9 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-300">
-          <i id="menu-icon" class="fas fa-bars"></i>
-        </button>
-      </div>
+      </div><!-- end flex row -->
 
-      <!-- Mobile Menu -->
-      <div id="mobile-menu" class="md:hidden max-h-0 opacity-0 overflow-hidden">
-        <div class="py-3 space-y-1 border-t border-white/06">
-          <button onclick="smoothTo('features'); toggleMobileMenu()" class="w-full text-left px-4 py-2.5 text-sm font-semibold text-slate-300 hover:text-white hover:bg-white/05 rounded-xl">Features</button>
-          <button onclick="smoothTo('how-it-works'); toggleMobileMenu()" class="w-full text-left px-4 py-2.5 text-sm font-semibold text-slate-300 hover:text-white hover:bg-white/05 rounded-xl">How It Works</button>
-          <button onclick="smoothTo('services'); toggleMobileMenu()" class="w-full text-left px-4 py-2.5 text-sm font-semibold text-slate-300 hover:text-white hover:bg-white/05 rounded-xl">Services</button>
-          <div class="px-4 pt-2 pb-1 flex gap-2">
-            <button onclick="openLogin()" class="flex-1 py-2.5 text-sm font-bold text-slate-300 border border-white/10 rounded-xl hover:bg-white/05">Login</button>
-            <button onclick="openLogin()" class="flex-1 cta-btn py-2.5 text-sm font-extrabold text-white rounded-xl">Get Started</button>
+      <!-- ---- MOBILE MENU (slides down) ---- -->
+      <div id="mobile-menu">
+        <div style="padding:8px 0 16px; border-top:1px solid rgba(255,255,255,0.06);">
+
+          <!-- Nav Links -->
+          <button onclick="smoothTo('features');toggleMobileMenu()" class="mobile-nav-link">
+            <i class="fas fa-star"></i> Features
+          </button>
+          <button onclick="smoothTo('how-it-works');toggleMobileMenu()" class="mobile-nav-link">
+            <i class="fas fa-list-check"></i> How It Works
+          </button>
+          <button onclick="smoothTo('services');toggleMobileMenu()" class="mobile-nav-link">
+            <i class="fas fa-screwdriver-wrench"></i> Services
+          </button>
+          <button onclick="smoothTo('testimonials');toggleMobileMenu()" class="mobile-nav-link">
+            <i class="fas fa-comments"></i> Reviews
+          </button>
+
+          <!-- Divider -->
+          <div style="height:1px;background:rgba(255,255,255,0.06);margin:8px 16px;"></div>
+
+          <!-- CTA Buttons -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 12px;">
+            <button onclick="openLogin()" style="padding:12px;font-size:13px;font-weight:700;color:#e2e8f0;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;cursor:pointer;font-family:inherit;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:6px;">
+              <i class="fas fa-arrow-right-to-bracket text-emerald-400"></i> Login
+            </button>
+            <button onclick="openLogin()" class="cta-btn" style="padding:12px;font-size:13px;font-weight:800;color:white;border:none;border-radius:12px;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:6px;">
+              <i class="fas fa-rocket"></i> Get Started
+            </button>
+          </div>
+
+          <!-- Worker link -->
+          <div style="text-align:center;margin-top:10px;">
+            <button onclick="openLogin('worker')" style="font-size:12px;font-weight:600;color:#0d9488;background:none;border:none;cursor:pointer;font-family:inherit;">
+              <i class="fas fa-tools mr-1 text-amber-400"></i> I'm a Worker — Register here
+            </button>
           </div>
         </div>
       </div>
-    </div>
+
+    </div><!-- end container -->
   </nav>
 
 
@@ -670,32 +791,61 @@
 
   <!-- ===================== SCRIPTS ===================== -->
   <script>
-    // Mobile menu
+    // ---- STATE ----
     let menuOpen = false;
-    function toggleMobileMenu() {
-      menuOpen = !menuOpen;
-      const menu = document.getElementById('mobile-menu');
-      const icon = document.getElementById('menu-icon');
-      if (menuOpen) {
-        menu.style.maxHeight = '320px';
-        menu.style.opacity = '1';
-        icon.className = 'fas fa-xmark';
-      } else {
-        menu.style.maxHeight = '0';
-        menu.style.opacity = '0';
-        icon.className = 'fas fa-bars';
-      }
-    }
-
-    // Smooth scroll
-    function smoothTo(id) {
-      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-
-    // Modal state
     let currentRole = 'customer';
     let authMode = 'login';
 
+    // ---- NAVBAR SCROLL EFFECT ----
+    window.addEventListener('scroll', () => {
+      const navbar = document.getElementById('navbar');
+      if (window.scrollY > 30) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    // ---- SHOW SIH BADGE ON LARGER SCREENS ----
+    function updateBadge() {
+      const badge = document.getElementById('sih-badge');
+      if (badge) badge.style.display = window.innerWidth >= 480 ? 'inline-block' : 'none';
+    }
+    window.addEventListener('resize', updateBadge);
+    updateBadge();
+
+    // ---- HAMBURGER / MOBILE MENU ----
+    function toggleMobileMenu() {
+      menuOpen = !menuOpen;
+      const menu = document.getElementById('mobile-menu');
+      const btn  = document.getElementById('hamburger-btn');
+      if (menuOpen) {
+        menu.classList.add('open');
+        btn.classList.add('menu-open');
+        btn.style.background = 'rgba(13,148,136,0.15)';
+        btn.style.borderColor = 'rgba(13,148,136,0.4)';
+      } else {
+        menu.classList.remove('open');
+        btn.classList.remove('menu-open');
+        btn.style.background = 'rgba(255,255,255,0.06)';
+        btn.style.borderColor = 'rgba(255,255,255,0.1)';
+      }
+    }
+
+    // Close menu on outside click
+    document.addEventListener('click', function(e) {
+      if (menuOpen && !e.target.closest('#navbar')) {
+        toggleMobileMenu();
+      }
+    });
+
+    // ---- SMOOTH SCROLL ----
+    function smoothTo(id) {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // ---- MODAL & AUTH ----
     const roleDescriptions = {
       customer: '<i class="fas fa-user-circle" style="margin-right:6px"></i> Customer: Book verified cooperative workers for home services.',
       worker: '<i class="fas fa-tools" style="margin-right:6px"></i> Worker: Access your dashboard, manage jobs & track earnings.',
