@@ -832,13 +832,13 @@ function renderFairMatchResultsModal(service, matches) {
             </div>
 
             <!-- AI Score Breakdown & Booking Action -->
-            <div class="mt-3 flex items-center justify-between gap-3 pt-2">
-              <div class="text-[11px] text-slate-500 font-semibold flex items-center gap-2">
+            <div class="mt-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-2 border-t border-slate-100">
+              <div class="text-[11px] text-slate-500 font-semibold flex flex-wrap items-center gap-2">
                 <span><i class="fas fa-location-dot text-rose-500"></i> ${m.dist} km away</span>
                 <span>•</span>
                 <span><i class="fas fa-calendar-check text-indigo-500"></i> ${m.worker.jobsCompletedThisMonth} jobs this month</span>
               </div>
-              <button onclick="confirmBookingWithWorker('${service.id}', '${m.worker.id}', ${m.workerRate})" class="px-4 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-extrabold text-xs rounded-xl shadow-md transition-all flex items-center gap-1.5 active:scale-95">
+              <button onclick="confirmBookingWithWorker('${service.id}', '${m.worker.id}', ${m.workerRate})" class="w-full sm:w-auto px-4 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-extrabold text-xs rounded-xl shadow-md transition-all flex items-center justify-center gap-1.5 active:scale-95">
                 <i class="fas fa-check-circle"></i> Book Worker (₹${m.workerRate})
               </button>
             </div>
