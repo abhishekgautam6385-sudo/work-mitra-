@@ -84,6 +84,14 @@ body { padding-bottom: env(safe-area-inset-bottom, 0px); }
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border-bottom: 1px solid rgba(226, 232, 240, 0.9);
+  width: 100%;
+}
+
+.glass-header .flex-row-nav {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  width: 100%;
 }
 
 /* ================================================================
