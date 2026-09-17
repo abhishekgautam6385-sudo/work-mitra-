@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>WorkMitra — Cooperative Gig Services Platform | SIH 089</title>
+  <meta name="description" content="Book verified cooperative plumbers, electricians, cleaners & artisans with zero middleman fees. 100% fair wages directly to workers.">
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0d9488">
+  <link rel="icon" type="image/jpeg" href="logo.jpg">
+  <link rel="apple-touch-icon" href="logo.jpg">
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #0d9488;
+      --accent: #f59e0b;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: #0a0f1e;
+      color: #f1f5f9;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    h1,h2,h3,h4,.font-heading { font-family: 'Outfit', sans-serif; }
+
+    /* Gradient mesh background */
+    .bg-mesh {
+      background: radial-gradient(ellipse 80% 50% at 20% 20%, rgba(13,148,136,0.18) 0%, transparent 60%),
+                  radial-gradient(ellipse 60% 60% at 80% 80%, rgba(245,158,11,0.10) 0%, transparent 55%),
+                  radial-gradient(ellipse 70% 70% at 50% 50%, rgba(6,182,212,0.07) 0%, transparent 60%),
+                  #0a0f1e;
+    }
+
+    /* Brand shimmer */
+    @keyframes shimmer {
+      0%,100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    .brand-text {
+      background: linear-gradient(135deg, #0d9488, #34d399, #0ea5e9, #f59e0b);
+      background-size: 300% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmer 5s ease infinite;
+    }
+
+    /* Floating glow orbs */
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+      animation: orbFloat 8s ease-in-out infinite;
+    }
+    @keyframes orbFloat {
+      0%,100% { transform: translateY(0px) scale(1); }
+      50% { transform: translateY(-30px) scale(1.05); }
+    }
+
+    /* Glass card */
+    .glass {
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .glass-light {
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    /* Fade in animation */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up { animation: fadeUp 0.6s cubic-bezier(0.16,1,0.3,1) forwards; }
+    .delay-1 { animation-delay: 0.1s; opacity: 0; }
+    .delay-2 { animation-delay: 0.2s; opacity: 0; }
+    .delay-3 { animation-delay: 0.3s; opacity: 0; }
+    .delay-4 { animation-delay: 0.4s; opacity: 0; }
+    .delay-5 { animation-delay: 0.5s; opacity: 0; }
+
+    /* Counter animation */
+    .counter { transition: all 1s ease; }
+
+    /* Hover cards */
+    .feature-card {
+      transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+    }
+    .feature-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(13,148,136,0.5);
+      background: rgba(13,148,136,0.08);
+    }
+
+    /* Login modal */
+    #login-modal {
+      transition: all 0.3s ease;
+    }
+    #login-modal.hidden { display: none; }
+
+    /* Role tab */
+    .role-tab {
+      transition: all 0.25s ease;
+      cursor: pointer;
+    }
+    .role-tab.active {
+      background: linear-gradient(135deg, #0d9488, #0284c7);
+      color: white;
+      box-shadow: 0 4px 15px rgba(13,148,136,0.4);
+    }
+
+    /* Input focus */
+    .login-input {
+      background: rgba(255,255,255,0.06);
+      border: 1.5px solid rgba(255,255,255,0.12);
+      color: #f1f5f9;
+      transition: all 0.2s ease;
+    }
+    .login-input:focus {
+      border-color: #0d9488;
+      box-shadow: 0 0 0 3px rgba(13,148,136,0.2);
+      outline: none;
+      background: rgba(13,148,136,0.06);
+    }
+    .login-input::placeholder { color: #94a3b8; }
+
+    /* CTA Button */
+    .cta-btn {
+      background: linear-gradient(135deg, #0f766e 0%, #0d9488 50%, #0284c7 100%);
+      background-size: 200% auto;
+      transition: all 0.3s ease;
+    }
+    .cta-btn:hover {
+      background-position: right center;
+      transform: scale(1.02);
+      box-shadow: 0 10px 30px rgba(13,148,136,0.45);
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: #0a0f1e; }
+    ::-webkit-scrollbar-thumb { background: #0d9488; border-radius: 99px; }
+
+    /* Mobile nav */
+    #mobile-menu { transition: max-height 0.3s ease, opacity 0.3s ease; }
+
+    /* Step connector */
+    .step-line::after {
+      content: '';
+      position: absolute;
+      top: 24px;
+      left: calc(50% + 32px);
+      width: calc(100% - 64px);
+      height: 2px;
+      background: linear-gradient(90deg, #0d9488, transparent);
+    }
+
+    @media (max-width: 639px) {
+      .step-line::after { display: none; }
+    }
+
+    /* Service pills */
+    .service-pill {
+      transition: all 0.25s ease;
+    }
+    .service-pill:hover {
+      background: rgba(13,148,136,0.15);
+      border-color: rgba(13,148,136,0.5);
+      transform: scale(1.03);
+    }
+
+    /* Testimonial card */
+    .testimonial-card {
+      transition: transform 0.3s ease;
+    }
+    .testimonial-card:hover { transform: translateY(-4px); }
+  </style>
+</head>
+
+<body class="bg-mesh min-h-screen">
+
+  <!-- ===================== NAV ===================== -->
+  <nav class="fixed top-0 left-0 right-0 z-50" style="background: rgba(10,15,30,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.06);">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-14 sm:h-16">
+
+        <!-- Logo -->
+        <div class="flex items-center gap-2 sm:gap-3 cursor-pointer" onclick="smoothTo('hero')">
+          <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl overflow-hidden p-0.5 bg-gradient-to-tr from-emerald-500 to-amber-400 flex-shrink-0">
+            <img src="logo.jpg" alt="WorkMitra" class="w-full h-full object-cover rounded-[10px]">
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-lg sm:text-xl font-extrabold text-white font-heading leading-none">Work<span class="brand-text">Mitra</span></span>
+            <span class="px-1.5 py-0.5 text-[9px] font-extrabold bg-amber-400/20 text-amber-300 border border-amber-400/30 rounded-md hidden xs:inline-block">SIH 089</span>
+          </div>
+        </div>
+
+        <!-- Desktop nav links -->
+        <div class="hidden md:flex items-center gap-6 text-sm font-semibold text-slate-300">
+          <button onclick="smoothTo('features')" class="hover:text-emerald-400 transition-colors">Features</button>
+          <button onclick="smoothTo('how-it-works')" class="hover:text-emerald-400 transition-colors">How It Works</button>
+          <button onclick="smoothTo('services')" class="hover:text-emerald-400 transition-colors">Services</button>
+          <button onclick="smoothTo('testimonials')" class="hover:text-emerald-400 transition-colors">Reviews</button>
+        </div>
+
+        <!-- Desktop CTA -->
+        <div class="hidden md:flex items-center gap-3">
+          <button onclick="openLogin()" class="px-4 py-2 text-sm font-bold text-slate-300 hover:text-white transition-colors">Login</button>
+          <button onclick="openLogin()" class="cta-btn px-5 py-2 text-sm font-extrabold text-white rounded-xl shadow-lg">
+            Get Started <i class="fas fa-arrow-right ml-1.5 text-xs"></i>
+          </button>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <button onclick="toggleMobileMenu()" class="md:hidden w-9 h-9 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-300">
+          <i id="menu-icon" class="fas fa-bars"></i>
+        </button>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div id="mobile-menu" class="md:hidden max-h-0 opacity-0 overflow-hidden">
+        <div class="py-3 space-y-1 border-t border-white/06">
+          <button onclick="smoothTo('features'); toggleMobileMenu()" class="w-full text-left px-4 py-2.5 text-sm font-semibold text-slate-300 hover:text-white hover:bg-white/05 rounded-xl">Features</button>
+          <button onclick="smoothTo('how-it-works'); toggleMobileMenu()" class="w-full text-left px-4 py-2.5 text-sm font-semibold text-slate-300 hover:text-white hover:bg-white/05 rounded-xl">How It Works</button>
+          <button onclick="smoothTo('services'); toggleMobileMenu()" class="w-full text-left px-4 py-2.5 text-sm font-semibold text-slate-300 hover:text-white hover:bg-white/05 rounded-xl">Services</button>
+          <div class="px-4 pt-2 pb-1 flex gap-2">
+            <button onclick="openLogin()" class="flex-1 py-2.5 text-sm font-bold text-slate-300 border border-white/10 rounded-xl hover:bg-white/05">Login</button>
+            <button onclick="openLogin()" class="flex-1 cta-btn py-2.5 text-sm font-extrabold text-white rounded-xl">Get Started</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- ===================== HERO ===================== -->
+  <section id="hero" class="relative min-h-screen flex items-center pt-16 pb-10 overflow-hidden">
+    <!-- Orbs -->
+    <div class="orb w-80 h-80 sm:w-[500px] sm:h-[500px] bg-emerald-500/20 -top-20 -left-20"></div>
+    <div class="orb w-60 h-60 sm:w-96 sm:h-96 bg-amber-500/15 -bottom-10 -right-10" style="animation-delay:3s"></div>
+    <div class="orb w-48 h-48 bg-cyan-500/10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" style="animation-delay:6s"></div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+      <div class="max-w-4xl mx-auto text-center">
+
+        <!-- Badge -->
+        <div class="fade-up delay-1 inline-flex items-center gap-2 px-4 py-2 mb-6 sm:mb-8 rounded-full glass border border-emerald-400/20 text-emerald-300 text-xs sm:text-sm font-bold">
+          <span class="relative flex h-2.5 w-2.5">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+          </span>
+          Smart India Hackathon 2024 • SIH Problem 089
+        </div>
+
+        <!-- Headline -->
+        <h1 class="fade-up delay-2 text-4xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight font-heading leading-[1.1] mb-4 sm:mb-6">
+          India's First <br>
+          <span class="brand-text">Zero-Commission</span><br>
+          <span class="text-white">Cooperative Platform</span>
+        </h1>
+
+        <!-- Subtitle -->
+        <p class="fade-up delay-3 text-slate-300 text-base sm:text-lg lg:text-xl leading-relaxed mb-8 sm:mb-10 max-w-2xl mx-auto">
+          Book verified plumbers, electricians, cleaners & artisans directly from cooperative societies. Workers earn <strong class="text-emerald-300">100%</strong> of what you pay — zero middleman cuts.
+        </p>
+
+        <!-- CTA Buttons -->
+        <div class="fade-up delay-4 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-10 sm:mb-14">
+          <button onclick="openLogin()" class="cta-btn w-full sm:w-auto px-8 py-4 text-base font-extrabold text-white rounded-2xl shadow-2xl flex items-center justify-center gap-2">
+            <i class="fas fa-rocket"></i> Book a Service Now
+          </button>
+          <button onclick="openLogin('worker')" class="w-full sm:w-auto px-8 py-4 text-base font-bold text-slate-200 rounded-2xl glass border border-white/10 hover:border-emerald-400/40 hover:bg-emerald-400/05 transition-all flex items-center justify-center gap-2">
+            <i class="fas fa-tools text-amber-400"></i> I'm a Worker
+          </button>
+        </div>
+
+        <!-- Stats Row -->
+        <div class="fade-up delay-5 grid grid-cols-3 gap-3 sm:gap-8 max-w-2xl mx-auto">
+          <div class="glass rounded-2xl p-3 sm:p-5 text-center">
+            <div class="text-2xl sm:text-4xl font-black text-emerald-400 font-heading" id="stat-workers">500+</div>
+            <div class="text-[10px] sm:text-xs text-slate-400 font-semibold mt-1">Verified Artisans</div>
+          </div>
+          <div class="glass rounded-2xl p-3 sm:p-5 text-center">
+            <div class="text-2xl sm:text-4xl font-black text-amber-400 font-heading">₹0</div>
+            <div class="text-[10px] sm:text-xs text-slate-400 font-semibold mt-1">Middleman Fees</div>
+          </div>
+          <div class="glass rounded-2xl p-3 sm:p-5 text-center">
+            <div class="text-2xl sm:text-4xl font-black text-sky-400 font-heading">98.4%</div>
+            <div class="text-[10px] sm:text-xs text-slate-400 font-semibold mt-1">Satisfaction Rate</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===================== FEATURES ===================== -->
+  <section id="features" class="py-16 sm:py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <div class="text-center mb-10 sm:mb-16">
+        <span class="px-3 py-1.5 text-xs font-extrabold bg-emerald-400/10 text-emerald-300 border border-emerald-400/20 rounded-full">WHY WORKMITRA</span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-heading mt-4 text-white">Built for Workers, <span class="brand-text">Built for India</span></h2>
+        <p class="text-slate-400 mt-3 max-w-xl mx-auto text-sm sm:text-base">Every feature is designed to empower skilled artisans and give customers transparent, fair service.</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+
+        <div class="feature-card glass rounded-2xl sm:rounded-3xl p-5 sm:p-7 border border-white/06">
+          <div class="w-12 h-12 rounded-2xl bg-emerald-500/15 border border-emerald-400/20 flex items-center justify-center text-2xl mb-4">🤝</div>
+          <h3 class="font-extrabold text-lg text-white font-heading mb-2">Zero Commission Cooperative</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">Workers own their earnings. No Swiggy/Zomato-style 20-30% cuts. Every rupee goes directly to the artisan.</p>
+        </div>
+
+        <div class="feature-card glass rounded-2xl sm:rounded-3xl p-5 sm:p-7 border border-white/06">
+          <div class="w-12 h-12 rounded-2xl bg-amber-500/15 border border-amber-400/20 flex items-center justify-center text-2xl mb-4">🔐</div>
+          <h3 class="font-extrabold text-lg text-white font-heading mb-2">Dual OTP Security System</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">Arrival & departure OTP verification with before/after photo proof. Maximum safety for both parties.</p>
+        </div>
+
+        <div class="feature-card glass rounded-2xl sm:rounded-3xl p-5 sm:p-7 border border-white/06">
+          <div class="w-12 h-12 rounded-2xl bg-sky-500/15 border border-sky-400/20 flex items-center justify-center text-2xl mb-4">🤖</div>
+          <h3 class="font-extrabold text-lg text-white font-heading mb-2">AI Fair Workload Engine</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">Smart matching based on experience, proximity & rating. Dynamic transparent pricing — no surprises.</p>
+        </div>
+
+        <div class="feature-card glass rounded-2xl sm:rounded-3xl p-5 sm:p-7 border border-white/06">
+          <div class="w-12 h-12 rounded-2xl bg-rose-500/15 border border-rose-400/20 flex items-center justify-center text-2xl mb-4">🛡️</div>
+          <h3 class="font-extrabold text-lg text-white font-heading mb-2">Welfare Fund & Insurance</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">₹10 auto-credited per job to worker welfare fund. Ayushman Bharat ₹5 Lakh health cover for all workers.</p>
+        </div>
+
+        <div class="feature-card glass rounded-2xl sm:rounded-3xl p-5 sm:p-7 border border-white/06">
+          <div class="w-12 h-12 rounded-2xl bg-violet-500/15 border border-violet-400/20 flex items-center justify-center text-2xl mb-4">🎙️</div>
+          <h3 class="font-extrabold text-lg text-white font-heading mb-2">Mitra Voice AI Assistant</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">Book services in Hindi, English or Hinglish. Fully voice-enabled with real-time speech recognition.</p>
+        </div>
+
+        <div class="feature-card glass rounded-2xl sm:rounded-3xl p-5 sm:p-7 border border-white/06">
+          <div class="w-12 h-12 rounded-2xl bg-teal-500/15 border border-teal-400/20 flex items-center justify-center text-2xl mb-4">🎁</div>
+          <h3 class="font-extrabold text-lg text-white font-heading mb-2">Loyalty Rewards System</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">Monthly Mitra Coins, cashback, festive gift hampers for customers & professional toolkit gifts for workers.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===================== HOW IT WORKS ===================== -->
+  <section id="how-it-works" class="py-16 sm:py-24" style="background: rgba(13,148,136,0.04); border-top: 1px solid rgba(13,148,136,0.1); border-bottom: 1px solid rgba(13,148,136,0.1);">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <div class="text-center mb-10 sm:mb-16">
+        <span class="px-3 py-1.5 text-xs font-extrabold bg-amber-400/10 text-amber-300 border border-amber-400/20 rounded-full">HOW IT WORKS</span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold font-heading mt-4 text-white">Book in <span class="brand-text">3 Simple Steps</span></h2>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
+
+        <div class="relative text-center step-line">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-emerald-600 to-teal-500 text-white flex items-center justify-center text-2xl mx-auto mb-4 shadow-xl shadow-emerald-900/40">
+            <i class="fas fa-search"></i>
+          </div>
+          <div class="inline-block px-2.5 py-0.5 bg-emerald-500/20 text-emerald-300 text-xs font-extrabold rounded-full mb-2">STEP 1</div>
+          <h3 class="font-extrabold text-lg text-white font-heading mb-2">Select Service</h3>
+          <p class="text-slate-400 text-sm">Choose from 8 service categories. Our AI matches you with the best cooperative workers nearby.</p>
+        </div>
+
+        <div class="relative text-center step-line">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-amber-500 to-orange-500 text-white flex items-center justify-center text-2xl mx-auto mb-4 shadow-xl shadow-amber-900/40">
+            <i class="fas fa-handshake"></i>
+          </div>
+          <div class="inline-block px-2.5 py-0.5 bg-amber-500/20 text-amber-300 text-xs font-extrabold rounded-full mb-2">STEP 2</div>
+          <h3 class="font-extrabold text-lg text-white font-heading mb-2">OTP Verify Worker</h3>
+          <p class="text-slate-400 text-sm">Share arrival OTP with the worker. Before/after photo proof ensures quality & accountability.</p>
+        </div>
+
+        <div class="relative text-center">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-sky-500 to-indigo-500 text-white flex items-center justify-center text-2xl mx-auto mb-4 shadow-xl shadow-sky-900/40">
+            <i class="fas fa-star"></i>
+          </div>
+          <div class="inline-block px-2.5 py-0.5 bg-sky-500/20 text-sky-300 text-xs font-extrabold rounded-full mb-2">STEP 3</div>
+          <h3 class="font-extrabold text-lg text-white font-heading mb-2">Pay & Rate</h3>
+          <p class="text-slate-400 text-sm">Pay the fair transparent rate. Rate the worker. ₹10 auto-credited to their welfare fund.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===================== SERVICES ===================== -->
+  <section id="services" class="py-16 sm:py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <div class="text-center mb-10 sm:mb-14">
+        <span class="px-3 py-1.5 text-xs font-extrabold bg-violet-400/10 text-violet-300 border border-violet-400/20 rounded-full">8 SERVICES</span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold font-heading mt-4 text-white">All Your Home Services, <span class="brand-text">One Platform</span></h2>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+        <div class="service-pill glass rounded-2xl p-4 sm:p-5 text-center cursor-pointer border border-white/06" onclick="openLogin()">
+          <div class="text-3xl sm:text-4xl mb-2">🔧</div>
+          <div class="font-bold text-sm text-white">Plumbing</div>
+          <div class="text-xs text-slate-400 mt-1">₹280 - ₹450/hr</div>
+        </div>
+        <div class="service-pill glass rounded-2xl p-4 sm:p-5 text-center cursor-pointer border border-white/06" onclick="openLogin()">
+          <div class="text-3xl sm:text-4xl mb-2">⚡</div>
+          <div class="font-bold text-sm text-white">Electrical</div>
+          <div class="text-xs text-slate-400 mt-1">₹300 - ₹470/hr</div>
+        </div>
+        <div class="service-pill glass rounded-2xl p-4 sm:p-5 text-center cursor-pointer border border-white/06" onclick="openLogin()">
+          <div class="text-3xl sm:text-4xl mb-2">🧹</div>
+          <div class="font-bold text-sm text-white">Cleaning</div>
+          <div class="text-xs text-slate-400 mt-1">₹200 - ₹370/hr</div>
+        </div>
+        <div class="service-pill glass rounded-2xl p-4 sm:p-5 text-center cursor-pointer border border-white/06" onclick="openLogin()">
+          <div class="text-3xl sm:text-4xl mb-2">🔨</div>
+          <div class="font-bold text-sm text-white">Carpentry</div>
+          <div class="text-xs text-slate-400 mt-1">₹320 - ₹490/hr</div>
+        </div>
+        <div class="service-pill glass rounded-2xl p-4 sm:p-5 text-center cursor-pointer border border-white/06" onclick="openLogin()">
+          <div class="text-3xl sm:text-4xl mb-2">❄️</div>
+          <div class="font-bold text-sm text-white">AC & Appliance</div>
+          <div class="text-xs text-slate-400 mt-1">₹350 - ₹520/hr</div>
+        </div>
+        <div class="service-pill glass rounded-2xl p-4 sm:p-5 text-center cursor-pointer border border-white/06" onclick="openLogin()">
+          <div class="text-3xl sm:text-4xl mb-2">🧱</div>
+          <div class="font-bold text-sm text-white">Masonry</div>
+          <div class="text-xs text-slate-400 mt-1">₹340 - ₹510/hr</div>
+        </div>
+        <div class="service-pill glass rounded-2xl p-4 sm:p-5 text-center cursor-pointer border border-white/06" onclick="openLogin()">
+          <div class="text-3xl sm:text-4xl mb-2">🎨</div>
+          <div class="font-bold text-sm text-white">Wall Painting</div>
+          <div class="text-xs text-slate-400 mt-1">₹290 - ₹460/hr</div>
+        </div>
+        <div class="service-pill glass rounded-2xl p-4 sm:p-5 text-center cursor-pointer border border-white/06" onclick="openLogin()">
+          <div class="text-3xl sm:text-4xl mb-2">🌿</div>
+          <div class="font-bold text-sm text-white">Gardening</div>
+          <div class="text-xs text-slate-400 mt-1">₹250 - ₹420/hr</div>
+        </div>
+      </div>
+
+      <div class="text-center mt-8">
+        <button onclick="openLogin()" class="cta-btn px-8 py-3.5 text-sm font-extrabold text-white rounded-2xl shadow-xl inline-flex items-center gap-2">
+          <i class="fas fa-search"></i> Find a Worker Near You
+        </button>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===================== TESTIMONIALS ===================== -->
+  <section id="testimonials" class="py-16 sm:py-24" style="background: rgba(245,158,11,0.03);">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <div class="text-center mb-10 sm:mb-14">
+        <span class="px-3 py-1.5 text-xs font-extrabold bg-rose-400/10 text-rose-300 border border-rose-400/20 rounded-full">TESTIMONIALS</span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold font-heading mt-4 text-white">Trusted by <span class="brand-text">Families & Workers</span></h2>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+
+        <div class="testimonial-card glass rounded-2xl p-5 sm:p-6 border border-white/06">
+          <div class="flex text-amber-400 text-xs mb-3">⭐⭐⭐⭐⭐</div>
+          <p class="text-slate-300 text-sm leading-relaxed italic">"Rahul fixed our pipe leak in 30 minutes. Dual OTP security made me feel completely safe. Best home service experience ever!"</p>
+          <div class="flex items-center gap-3 mt-4">
+            <div class="w-9 h-9 rounded-full bg-emerald-500/30 flex items-center justify-center font-bold text-emerald-300">S</div>
+            <div>
+              <div class="font-bold text-white text-sm">Sunita Aggarwal</div>
+              <div class="text-[10px] text-slate-400">Dwarka Sector 12, Delhi</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card glass rounded-2xl p-5 sm:p-6 border border-white/06">
+          <div class="flex text-amber-400 text-xs mb-3">⭐⭐⭐⭐⭐</div>
+          <p class="text-slate-300 text-sm leading-relaxed italic">"I earn ₹4,500 more per month now compared to working with old aggregators. My kids' school fees are covered. WorkMitra changed my life."</p>
+          <div class="flex items-center gap-3 mt-4">
+            <div class="w-9 h-9 rounded-full bg-amber-500/30 flex items-center justify-center font-bold text-amber-300">R</div>
+            <div>
+              <div class="font-bold text-white text-sm">Rahul Vishwakarma</div>
+              <div class="text-[10px] text-slate-400">Master Plumber, Delhi Artisan Coop</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card glass rounded-2xl p-5 sm:p-6 border border-white/06">
+          <div class="flex text-amber-400 text-xs mb-3">⭐⭐⭐⭐⭐</div>
+          <p class="text-slate-300 text-sm leading-relaxed italic">"Before/after photos gave me complete confidence in the quality. Transparent ₹350 rate with zero hidden fees. Booking again for sure!"</p>
+          <div class="flex items-center gap-3 mt-4">
+            <div class="w-9 h-9 rounded-full bg-sky-500/30 flex items-center justify-center font-bold text-sky-300">P</div>
+            <div>
+              <div class="font-bold text-white text-sm">Priya Sharma</div>
+              <div class="text-[10px] text-slate-400">Janakpuri, New Delhi</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===================== FOOTER CTA ===================== -->
+  <section class="py-16 sm:py-20 text-center relative overflow-hidden">
+    <div class="orb w-80 h-80 bg-emerald-500/15 top-0 left-1/2 -translate-x-1/2 -translate-y-1/2"></div>
+    <div class="relative max-w-2xl mx-auto px-4">
+      <h2 class="text-3xl sm:text-4xl font-extrabold font-heading text-white mb-4">Ready to Book a <span class="brand-text">Fair Service?</span></h2>
+      <p class="text-slate-400 text-sm sm:text-base mb-8">Join 500+ verified cooperative workers and thousands of happy families.</p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+        <button onclick="openLogin()" class="cta-btn w-full sm:w-auto px-8 py-4 text-base font-extrabold text-white rounded-2xl shadow-2xl flex items-center justify-center gap-2">
+          <i class="fas fa-rocket"></i> Book a Service
+        </button>
+        <button onclick="openLogin('worker')" class="w-full sm:w-auto px-8 py-4 text-base font-bold text-slate-200 rounded-2xl glass border border-white/10 hover:border-emerald-400/40 transition-all flex items-center justify-center gap-2">
+          <i class="fas fa-tools text-amber-400"></i> Register as Worker
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer style="border-top: 1px solid rgba(255,255,255,0.06); background: rgba(0,0,0,0.3);">
+    <div class="max-w-7xl mx-auto px-4 py-6 sm:py-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-slate-400 text-xs sm:text-sm">
+      <span>© 2026 <strong class="text-white">WorkMitra</strong> — SIH 089 • Zero Commission Cooperative Platform</span>
+      <div class="flex items-center gap-4">
+        <span class="flex items-center gap-1.5"><i class="fas fa-shield-heart text-emerald-400"></i> Worker Welfare Fund</span>
+        <span class="flex items-center gap-1.5"><i class="fas fa-award text-amber-400"></i> VERIFIED COOPERATIVE</span>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- ===================== LOGIN MODAL ===================== -->
+  <div id="login-modal" class="fixed inset-0 z-[100] flex items-end sm:items-center justify-center hidden" style="background: rgba(0,0,0,0.75); backdrop-filter: blur(8px);">
+    <div class="w-full sm:max-w-md" style="background: #111827; border: 1px solid rgba(255,255,255,0.1); border-radius: 24px 24px 0 0; padding: 0; overflow: hidden; max-height: 90vh; overflow-y: auto;" id="login-modal-box">
+      
+      <!-- Modal Handle (mobile) -->
+      <div class="flex justify-center pt-3 sm:hidden">
+        <div style="width:40px; height:4px; background: rgba(255,255,255,0.2); border-radius: 99px;"></div>
+      </div>
+
+      <!-- Modal Header -->
+      <div style="padding: 20px 24px 16px; background: linear-gradient(135deg, rgba(13,148,136,0.15), rgba(2,132,199,0.10)); border-bottom: 1px solid rgba(255,255,255,0.07);">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2.5">
+            <div style="width:36px; height:36px; border-radius:12px; overflow:hidden; background: linear-gradient(135deg, #0d9488, #f59e0b);">
+              <img src="logo.jpg" alt="Logo" style="width:100%; height:100%; object-fit:cover;">
+            </div>
+            <div>
+              <div class="font-extrabold text-white text-base font-heading leading-none">Work<span class="brand-text">Mitra</span></div>
+              <div style="font-size:10px; color:#94a3b8; font-weight:600;">Cooperative Services Platform</div>
+            </div>
+          </div>
+          <button onclick="closeLogin()" style="width:32px; height:32px; border-radius:10px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:#94a3b8; display:flex; align-items:center; justify-content:center; cursor:pointer;">
+            <i class="fas fa-xmark text-sm"></i>
+          </button>
+        </div>
+
+        <!-- Role Tabs -->
+        <div style="display:flex; gap:6px; margin-top:16px; background:rgba(255,255,255,0.04); padding:4px; border-radius:14px;">
+          <button id="tab-customer" onclick="switchRole('customer')" class="role-tab active" style="flex:1; padding:8px; border-radius:10px; font-size:11px; font-weight:700; color:white; border:none; cursor:pointer;">
+            <i class="fas fa-user-circle mr-1"></i> Customer
+          </button>
+          <button id="tab-worker" onclick="switchRole('worker')" class="role-tab" style="flex:1; padding:8px; border-radius:10px; font-size:11px; font-weight:700; color:#94a3b8; border:none; cursor:pointer; background:transparent;">
+            <i class="fas fa-tools mr-1"></i> Worker
+          </button>
+          <button id="tab-admin" onclick="switchRole('admin')" class="role-tab" style="flex:1; padding:8px; border-radius:10px; font-size:11px; font-weight:700; color:#94a3b8; border:none; cursor:pointer; background:transparent;">
+            <i class="fas fa-building-columns mr-1"></i> Admin
+          </button>
+        </div>
+      </div>
+
+      <!-- Modal Body -->
+      <div style="padding: 20px 24px;">
+
+        <!-- Auth Toggle (Login / Signup) -->
+        <div id="auth-mode-toggle" style="display:flex; gap:0; background:rgba(255,255,255,0.04); border-radius:12px; padding:3px; margin-bottom:20px;">
+          <button id="btn-login" onclick="setAuthMode('login')" style="flex:1; padding:8px; border-radius:9px; font-size:12px; font-weight:700; background:linear-gradient(135deg,#0d9488,#0284c7); color:white; border:none; cursor:pointer;">Login</button>
+          <button id="btn-signup" onclick="setAuthMode('signup')" style="flex:1; padding:8px; border-radius:9px; font-size:12px; font-weight:700; color:#94a3b8; background:transparent; border:none; cursor:pointer;">Sign Up</button>
+        </div>
+
+        <!-- Role Description -->
+        <div id="role-description" style="padding:10px 12px; background:rgba(13,148,136,0.08); border:1px solid rgba(13,148,136,0.2); border-radius:12px; margin-bottom:16px; font-size:11px; color:#5eead4; font-weight:600;">
+          <i class="fas fa-user-circle mr-1.5"></i> Customer: Book verified cooperative workers for home services.
+        </div>
+
+        <!-- Signup-only fields -->
+        <div id="signup-fields" style="display:none;">
+          <div style="margin-bottom:12px;">
+            <label style="display:block; font-size:11px; font-weight:700; color:#94a3b8; margin-bottom:6px; text-transform:uppercase; letter-spacing:0.05em;">Full Name</label>
+            <input id="input-name" type="text" placeholder="Sunita Aggarwal" class="login-input" style="width:100%; padding:12px 14px; border-radius:12px; font-size:13px; font-family:inherit;">
+          </div>
+          <div style="margin-bottom:12px;">
+            <label style="display:block; font-size:11px; font-weight:700; color:#94a3b8; margin-bottom:6px; text-transform:uppercase; letter-spacing:0.05em;">Phone Number</label>
+            <input id="input-phone" type="tel" placeholder="+91 98765 43210" class="login-input" style="width:100%; padding:12px 14px; border-radius:12px; font-size:13px; font-family:inherit;">
+          </div>
+        </div>
+
+        <!-- Email / Username -->
+        <div style="margin-bottom:12px;">
+          <label style="display:block; font-size:11px; font-weight:700; color:#94a3b8; margin-bottom:6px; text-transform:uppercase; letter-spacing:0.05em;">Email / Username</label>
+          <input id="input-email" type="email" placeholder="you@example.com" class="login-input" style="width:100%; padding:12px 14px; border-radius:12px; font-size:13px; font-family:inherit;">
+        </div>
+
+        <!-- Password -->
+        <div style="margin-bottom:6px;">
+          <label style="display:block; font-size:11px; font-weight:700; color:#94a3b8; margin-bottom:6px; text-transform:uppercase; letter-spacing:0.05em;">Password</label>
+          <div style="position:relative;">
+            <input id="input-password" type="password" placeholder="••••••••" class="login-input" style="width:100%; padding:12px 14px 12px 14px; border-radius:12px; font-size:13px; font-family:inherit; padding-right:44px;">
+            <button onclick="togglePwd()" style="position:absolute; right:12px; top:50%; transform:translateY(-50%); background:none; border:none; color:#64748b; cursor:pointer;">
+              <i id="pwd-icon" class="fas fa-eye text-sm"></i>
+            </button>
+          </div>
+        </div>
+
+        <div id="forgot-link" style="text-align:right; margin-bottom:16px;">
+          <button style="font-size:11px; color:#0d9488; font-weight:600; background:none; border:none; cursor:pointer;">Forgot Password?</button>
+        </div>
+
+        <!-- Submit -->
+        <button id="submit-btn" onclick="handleAuth()" class="cta-btn" style="width:100%; padding:14px; border:none; border-radius:14px; color:white; font-size:14px; font-weight:800; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; font-family:inherit;" id="submit-btn">
+          <i class="fas fa-arrow-right-to-bracket"></i>
+          <span id="submit-text">Login to WorkMitra</span>
+        </button>
+
+        <!-- Demo hint -->
+        <div style="margin-top:16px; padding:10px 12px; background:rgba(245,158,11,0.08); border:1px solid rgba(245,158,11,0.2); border-radius:12px; text-align:center; font-size:11px; color:#fbbf24; font-weight:600;">
+          <i class="fas fa-wand-magic-sparkles mr-1"></i> Demo: Enter any email & password to proceed!
+        </div>
+
+        <!-- Social divider -->
+        <div style="display:flex; align-items:center; gap:12px; margin:16px 0;">
+          <div style="flex:1; height:1px; background:rgba(255,255,255,0.08);"></div>
+          <span style="font-size:11px; color:#475569; font-weight:600;">OR CONTINUE WITH</span>
+          <div style="flex:1; height:1px; background:rgba(255,255,255,0.08);"></div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+          <button onclick="handleAuth()" style="padding:11px; border-radius:12px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:#e2e8f0; font-size:12px; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px; font-family:inherit; transition:all 0.2s;">
+            <i class="fab fa-google text-rose-400"></i> Google
+          </button>
+          <button onclick="handleAuth()" style="padding:11px; border-radius:12px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:#e2e8f0; font-size:12px; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px; font-family:inherit; transition:all 0.2s;">
+            <i class="fab fa-facebook text-sky-400"></i> Facebook
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ===================== SCRIPTS ===================== -->
+  <script>
+    // Mobile menu
+    let menuOpen = false;
+    function toggleMobileMenu() {
+      menuOpen = !menuOpen;
+      const menu = document.getElementById('mobile-menu');
+      const icon = document.getElementById('menu-icon');
+      if (menuOpen) {
+        menu.style.maxHeight = '320px';
+        menu.style.opacity = '1';
+        icon.className = 'fas fa-xmark';
+      } else {
+        menu.style.maxHeight = '0';
+        menu.style.opacity = '0';
+        icon.className = 'fas fa-bars';
+      }
+    }
+
+    // Smooth scroll
+    function smoothTo(id) {
+      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // Modal state
+    let currentRole = 'customer';
+    let authMode = 'login';
+
+    const roleDescriptions = {
+      customer: '<i class="fas fa-user-circle" style="margin-right:6px"></i> Customer: Book verified cooperative workers for home services.',
+      worker: '<i class="fas fa-tools" style="margin-right:6px"></i> Worker: Access your dashboard, manage jobs & track earnings.',
+      admin: '<i class="fas fa-building-columns" style="margin-right:6px"></i> Admin: Manage cooperative federation, verify workers & analytics.'
+    };
+
+    function openLogin(role = 'customer') {
+      currentRole = role;
+      updateRoleTab(role);
+      document.getElementById('login-modal').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLogin() {
+      document.getElementById('login-modal').classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    function switchRole(role) {
+      currentRole = role;
+      updateRoleTab(role);
+    }
+
+    function updateRoleTab(role) {
+      ['customer', 'worker', 'admin'].forEach(r => {
+        const tab = document.getElementById('tab-' + r);
+        if (r === role) {
+          tab.style.background = 'linear-gradient(135deg, #0d9488, #0284c7)';
+          tab.style.color = 'white';
+          tab.style.boxShadow = '0 4px 15px rgba(13,148,136,0.35)';
+        } else {
+          tab.style.background = 'transparent';
+          tab.style.color = '#94a3b8';
+          tab.style.boxShadow = 'none';
+        }
+      });
+      document.getElementById('role-description').innerHTML = roleDescriptions[role];
+    }
+
+    function setAuthMode(mode) {
+      authMode = mode;
+      const signupFields = document.getElementById('signup-fields');
+      const forgotLink = document.getElementById('forgot-link');
+      const submitText = document.getElementById('submit-text');
+      const btnLogin = document.getElementById('btn-login');
+      const btnSignup = document.getElementById('btn-signup');
+
+      if (mode === 'signup') {
+        signupFields.style.display = 'block';
+        forgotLink.style.display = 'none';
+        submitText.textContent = 'Create Account';
+        btnLogin.style.background = 'transparent';
+        btnLogin.style.color = '#94a3b8';
+        btnSignup.style.background = 'linear-gradient(135deg,#0d9488,#0284c7)';
+        btnSignup.style.color = 'white';
+        btnSignup.style.borderRadius = '9px';
+      } else {
+        signupFields.style.display = 'none';
+        forgotLink.style.display = 'block';
+        submitText.textContent = 'Login to WorkMitra';
+        btnSignup.style.background = 'transparent';
+        btnSignup.style.color = '#94a3b8';
+        btnLogin.style.background = 'linear-gradient(135deg,#0d9488,#0284c7)';
+        btnLogin.style.color = 'white';
+        btnLogin.style.borderRadius = '9px';
+      }
+    }
+
+    function togglePwd() {
+      const input = document.getElementById('input-password');
+      const icon = document.getElementById('pwd-icon');
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.className = 'fas fa-eye-slash text-sm';
+      } else {
+        input.type = 'password';
+        icon.className = 'fas fa-eye text-sm';
+      }
+    }
+
+    function handleAuth() {
+      const email = document.getElementById('input-email').value.trim();
+      const password = document.getElementById('input-password').value;
+
+      if (!email) {
+        document.getElementById('input-email').focus();
+        document.getElementById('input-email').style.borderColor = '#ef4444';
+        setTimeout(() => { document.getElementById('input-email').style.borderColor = ''; }, 2000);
+        return;
+      }
+      if (!password) {
+        document.getElementById('input-password').focus();
+        document.getElementById('input-password').style.borderColor = '#ef4444';
+        setTimeout(() => { document.getElementById('input-password').style.borderColor = ''; }, 2000);
+        return;
+      }
+
+      // Show loading
+      const btn = document.getElementById('submit-btn');
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing In...';
+      btn.style.opacity = '0.8';
+
+      // Store auth state & redirect
+      setTimeout(() => {
+        localStorage.setItem('wm_role', currentRole);
+        localStorage.setItem('wm_email', email);
+        localStorage.setItem('wm_name', authMode === 'signup'
+          ? (document.getElementById('input-name')?.value || email.split('@')[0])
+          : email.split('@')[0]);
+        window.location.href = 'index.html';
+      }, 900);
+    }
+
+    // Close modal on backdrop click
+    document.getElementById('login-modal').addEventListener('click', function(e) {
+      if (e.target === this) closeLogin();
+    });
+
+    // Desktop: make modal box rounded on all sides
+    function adjustModal() {
+      const box = document.getElementById('login-modal-box');
+      if (window.innerWidth >= 640) {
+        box.style.borderRadius = '24px';
+      } else {
+        box.style.borderRadius = '24px 24px 0 0';
+      }
+    }
+    window.addEventListener('resize', adjustModal);
+    adjustModal();
+
+    // Animate stats on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-up').forEach(el => {
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>

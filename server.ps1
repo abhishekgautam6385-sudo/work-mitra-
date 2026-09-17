@@ -18,7 +18,7 @@ try {
 
         try {
             $path = $request.Url.LocalPath
-            if ($path -eq "/" -or $path -eq "") { $path = "/index.html" }
+            if ($path -eq "/" -or $path -eq "") { $path = "/landing.html" }
             
             $filePath = Join-Path $root $path.TrimStart('/')
             
