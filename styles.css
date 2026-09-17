@@ -226,6 +226,22 @@ body { padding-bottom: env(safe-area-inset-bottom, 0px); }
    ================================================================ */
 @media (max-width: 639px) {
 
+  /* Header Navbar responsiveness */
+  .glass-header .max-w-7xl {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
+  
+  .global-lang-btn {
+    padding: 3px 6px !important;
+    font-size: 10px !important;
+  }
+
+  .role-btn {
+    padding: 4px 8px !important;
+    font-size: 10px !important;
+  }
+
   /* Voice panel: full-width on mobile */
   #voice-assistant-panel {
     width: calc(100vw - 16px) !important;
@@ -278,6 +294,21 @@ body { padding-bottom: env(safe-area-inset-bottom, 0px); }
   .card-hover-lift:active {
     transform: scale(0.98);
     box-shadow: 0 8px 20px rgba(13,148,136,0.12);
+  }
+}
+
+@media (max-width: 480px) {
+  .glass-header h1 {
+    font-size: 1.1rem !important;
+  }
+  .global-lang-btn span {
+    font-size: 9px !important;
+  }
+  .role-btn span {
+    display: none !important;
+  }
+  .role-btn {
+    padding: 5px 8px !important;
   }
 }
 
