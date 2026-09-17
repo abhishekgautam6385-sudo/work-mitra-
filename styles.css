@@ -216,3 +216,118 @@ h1, h2, h3, h4, h5, .font-heading {
   color: white !important;
 }
 
+/* ================================================================
+   RESPONSIVE DESIGN SYSTEM — Mobile First (WorkMitra SIH 089)
+   ================================================================ */
+
+*, *::before, *::after { box-sizing: border-box; }
+img, video { max-width: 100%; height: auto; }
+
+/* SCROLLBAR NONE UTILITY */
+.scrollbar-none { scrollbar-width: none; -ms-overflow-style: none; }
+.scrollbar-none::-webkit-scrollbar { display: none; }
+
+/* TOUCH IMPROVEMENTS */
+button, a { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+
+/* SAFE AREA (iPhone notch) */
+@supports (padding: max(0px)) {
+  body { padding-bottom: max(20px, env(safe-area-inset-bottom)); }
+}
+
+/* ---- HEADER: xs mobile ---- */
+@media (max-width: 639px) {
+  header .max-w-7xl { height: auto; min-height: 56px; padding-top: 8px; padding-bottom: 8px; }
+  .global-lang-btn { padding: 5px 8px !important; font-size: 10px !important; }
+  .role-btn span.hidden { display: none !important; }
+}
+
+/* ---- HERO BANNER ---- */
+@media (max-width: 639px) {
+  #customer-view .rounded-3xl { border-radius: 1.25rem !important; }
+  #customer-view .p-8, #customer-view .p-10 { padding: 1.25rem !important; }
+  #customer-view h2 { font-size: 1.5rem !important; line-height: 1.25 !important; }
+  #customer-view .flex.flex-wrap.gap-3 > div { font-size: 10px !important; padding: 5px 9px !important; }
+}
+
+/* ---- CATEGORY FILTER BAR ---- */
+@media (max-width: 767px) {
+  .cat-pill { white-space: nowrap; flex-shrink: 0; font-size: 11px !important; padding: 6px 12px !important; }
+}
+
+/* ---- SERVICE GRID ---- */
+@media (max-width: 639px) { #services-grid { grid-template-columns: 1fr !important; } }
+@media (min-width: 640px) and (max-width: 1023px) { #services-grid { grid-template-columns: repeat(2, 1fr) !important; } }
+
+/* ---- MAIN LAYOUT: single col on mobile/tablet ---- */
+@media (max-width: 1023px) {
+  .grid.lg\:grid-cols-3 { grid-template-columns: 1fr !important; }
+  .lg\:col-span-2 { grid-column: span 1 !important; }
+  .lg\:col-span-1 { grid-column: span 1 !important; }
+}
+
+/* ---- CUSTOMER REWARDS: 2-col → 1-col on xs ---- */
+@media (max-width: 480px) {
+  .grid.grid-cols-2.gap-2 { grid-template-columns: 1fr !important; }
+}
+
+/* ---- MODALS ---- */
+@media (max-width: 639px) {
+  #match-modal-content, #auth-modal-content {
+    border-radius: 1.25rem !important;
+    max-height: 88vh;
+    overflow-y: auto;
+    margin: 0 8px;
+  }
+}
+
+/* ---- VOICE ASSISTANT PANEL ---- */
+@media (max-width: 639px) {
+  #voice-assistant-panel {
+    width: calc(100vw - 16px) !important;
+    right: 8px !important;
+    left: 8px !important;
+    bottom: 80px !important;
+    height: 460px !important;
+    max-height: 78vh !important;
+    border-radius: 1.5rem !important;
+  }
+  #voice-assistant-toggle span.font-extrabold { display: none !important; }
+  #voice-assistant-toggle { padding: 10px 14px !important; }
+}
+
+/* ---- SIH DEMO BAR ---- */
+@media (max-width: 639px) {
+  .fixed.bottom-3 {
+    width: calc(100vw - 24px) !important;
+    border-radius: 1rem !important;
+    flex-wrap: wrap !important;
+    gap: 5px !important;
+    padding: 10px 12px !important;
+    font-size: 10px !important;
+  }
+  .fixed.bottom-3 button { font-size: 10px !important; padding: 5px 9px !important; }
+}
+
+/* ---- WORKER PORTAL ---- */
+@media (max-width: 767px) {
+  #worker-view .flex.flex-col { align-items: flex-start !important; }
+  #worker-content .grid { grid-template-columns: 1fr !important; }
+  #worker-content .md\:grid-cols-2 { grid-template-columns: 1fr !important; }
+}
+
+/* ---- WORKER REWARD GRID ---- */
+@media (max-width: 639px) {
+  .grid.md\:grid-cols-2.gap-4 { grid-template-columns: 1fr !important; }
+}
+
+/* ---- ADMIN VIEW ---- */
+@media (max-width: 767px) {
+  #admin-content .grid { grid-template-columns: 1fr !important; }
+}
+
+/* ---- WORKER DASHBOARD RATING SUB-METRICS ---- */
+@media (max-width: 480px) {
+  .grid.grid-cols-2.gap-2\.5 { grid-template-columns: 1fr !important; }
+  .grid.md\:grid-cols-2.gap-5 { grid-template-columns: 1fr !important; }
+}
