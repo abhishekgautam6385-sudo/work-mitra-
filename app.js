@@ -339,6 +339,14 @@ function applyTranslations() {
 }
 
 function renderApp() {
+  const savedRole = localStorage.getItem('wm_role');
+  if (savedRole && ['customer', 'worker', 'admin'].includes(savedRole)) {
+    state.currentRole = savedRole;
+  }
+  const savedName = localStorage.getItem('wm_name');
+  if (savedName && state.currentUser) {
+    state.currentUser.name = savedName;
+  }
   updateHeaderAuthBadge();
   renderPwaInstallButton(true);
   applyTranslations();
@@ -616,14 +624,17 @@ function renderCustomerView() {
   setTimeout(initCustomerMap, 300);
 }
 
-function filterCategory(cat) {
+function filterCategory(cat, btnElement) {
   state.selectedCategory = cat;
   document.querySelectorAll('.cat-pill').forEach(btn => {
     btn.classList.remove('bg-emerald-700', 'text-white');
     btn.classList.add('bg-slate-100', 'text-slate-700', 'hover:bg-slate-200');
   });
-  event.target.classList.remove('bg-slate-100', 'text-slate-700', 'hover:bg-slate-200');
-  event.target.classList.add('bg-emerald-700', 'text-white');
+  const target = btnElement || (typeof event !== 'undefined' && event ? (event.currentTarget || event.target) : null);
+  if (target && target.classList) {
+    target.classList.remove('bg-slate-100', 'text-slate-700', 'hover:bg-slate-200');
+    target.classList.add('bg-emerald-700', 'text-white');
+  }
   renderServicesCatalog();
 }
 
@@ -945,10 +956,11 @@ function renderActiveBookingsCustomer() {
 
 function initCustomerMap() {
   const mapElement = document.getElementById('customer-map');
-  if (!mapElement) return;
+  if (!mapElement || typeof L === 'undefined') return;
 
   if (mapInstance) {
-    mapInstance.remove();
+    try { mapInstance.remove(); } catch(e) {}
+    mapInstance = null;
   }
 
   mapInstance = L.map('customer-map').setView([state.customerLocation.lat, state.customerLocation.lng], 13);
