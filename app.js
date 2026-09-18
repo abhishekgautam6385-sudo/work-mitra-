@@ -362,26 +362,26 @@ function updateHeaderAuthBadge() {
 
   if (state.currentUser) {
     container.innerHTML = `
-      <div class="flex items-center gap-3 bg-slate-100 p-1.5 px-3 rounded-2xl border border-slate-200 shadow-sm">
-        <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-emerald-600 to-teal-500 text-white font-bold flex items-center justify-center text-xs shadow">
+      <div class="flex items-center gap-1.5 sm:gap-2 bg-slate-100/90 p-1 px-2 sm:px-3 rounded-xl border border-slate-200/80 shadow-xs flex-shrink-0">
+        <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-tr from-emerald-600 to-teal-500 text-white font-bold flex items-center justify-center text-xs shadow flex-shrink-0">
           ${state.currentUser.name.charAt(0)}
         </div>
-        <div class="hidden sm:block text-left">
-          <span class="font-bold text-xs text-slate-800 block leading-none">${state.currentUser.name}</span>
-          <span class="text-[10px] text-emerald-700 font-extrabold uppercase tracking-wider">${state.currentUser.role}</span>
+        <div class="hidden sm:block text-left min-w-0">
+          <span class="font-bold text-xs text-slate-800 block leading-none truncate max-w-[100px]">${state.currentUser.name}</span>
+          <span class="text-[9px] text-emerald-700 font-extrabold uppercase tracking-wider">${state.currentUser.role}</span>
         </div>
-        <button onclick="openSaasAuthScreen('${state.currentRole}', 'login')" title="Switch Account" class="px-2.5 py-1 bg-white hover:bg-slate-200 text-slate-700 font-bold text-[11px] rounded-lg border border-slate-300 shadow-sm transition-all">
+        <button onclick="openSaasAuthScreen('${state.currentRole}', 'login')" title="Switch Account" class="px-2 py-1 bg-white hover:bg-slate-200 text-slate-700 font-bold text-[10px] sm:text-[11px] rounded-lg border border-slate-300 shadow-xs transition-all whitespace-nowrap">
           Switch
         </button>
-        <button onclick="logoutCurrentSession()" title="Logout" class="w-7 h-7 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 flex items-center justify-center transition-colors">
+        <button onclick="logoutCurrentSession()" title="Logout" class="w-6 h-6 sm:w-7 sm:h-7 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 flex items-center justify-center transition-colors flex-shrink-0">
           <i class="fas fa-power-off text-xs"></i>
         </button>
       </div>
     `;
   } else {
     container.innerHTML = `
-      <button onclick="openSaasAuthScreen('customer', 'login')" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-md transition-all flex items-center gap-1.5">
-        <i class="fas fa-lock"></i> SaaS Login
+      <button onclick="openSaasAuthScreen('customer', 'login')" class="px-3 py-1.5 sm:px-4 sm:py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[11px] sm:text-xs rounded-xl shadow-md transition-all flex items-center gap-1.5 whitespace-nowrap">
+        <i class="fas fa-lock text-xs"></i> Login
       </button>
     `;
   }
