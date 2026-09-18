@@ -1,117 +1,28 @@
 /* ================================================================
-   WorkMitra - Complete Design & Responsive System (SIH 089)
+   WORKMITRA DESIGN SYSTEM - MAIN ENTRYPOINT
    ================================================================ */
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
 
-/* ---- CSS VARIABLES ---- */
-:root {
-  --primary: #0d9488;
-  --primary-dark: #0f766e;
-  --primary-light: #ccfbf1;
-  --accent: #f59e0b;
-  --accent2: #6366f1;
-  --success: #10b981;
-  --dark-bg: #0f172a;
-  --dark-card: #1e293b;
-
-  /* Spacing */
-  --header-h: 56px;
-  --demo-bar-h: 48px;
-}
-
-/* ---- RESET & BASE ---- */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-  -webkit-text-size-adjust: 100%;
-}
-
-body {
-  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-  background-color: #f8fafc;
-  color: #0f172a;
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-img,
-video,
-svg {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-.font-heading {
-  font-family: 'Outfit', sans-serif;
-}
-
-/* ---- UTILITIES ---- */
-.scrollbar-none {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-.scrollbar-none::-webkit-scrollbar {
-  display: none;
-}
-
-button,
-a {
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
-}
-
-/* ---- SAFE AREA (iPhone notch/home bar) ---- */
-body {
-  padding-bottom: env(safe-area-inset-bottom, 0px);
-}
-
-@supports (padding: max(0px)) {
-  body {
-    padding-bottom: max(0px, env(safe-area-inset-bottom));
-  }
-}
-
-/* ---- CUSTOM SCROLLBAR ---- */
-::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
-}
-
-::-webkit-scrollbar-track {
-  background: #f1f5f9;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 9999px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--primary);
-}
+/* Modular Design Tokens & Component Styles */
+@import url('css/tokens.css');
+@import url('css/base.css');
+@import url('css/utilities.css');
+@import url('css/components/navbar.css');
+@import url('css/components/hero.css');
+@import url('css/components/service-card.css');
+@import url('css/components/rewards.css');
+@import url('css/components/booking.css');
+@import url('css/components/ai-assistant.css');
+@import url('css/components/footer.css');
 
 /* ================================================================
-   GLASSMORPHISM
+   LEGACY & UTILITY COMPATIBILITY OVERRIDES
    ================================================================ */
 .glass-panel {
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(226, 232, 240, 0.8);
-  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.04);
+  box-shadow: var(--shadow-md);
 }
 
 .glass-dark {
@@ -119,7 +30,7 @@ body {
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--shadow-xl);
 }
 
 .glass-header {
@@ -130,112 +41,6 @@ body {
   width: 100%;
 }
 
-.glass-header .flex-row-nav {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: space-between !important;
-  width: 100%;
-}
-
-/* ================================================================
-   BRAND ANIMATIONS
-   ================================================================ */
-@keyframes textShimmer {
-  0% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
-
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-.brand-gradient-text {
-  background: linear-gradient(135deg, #0d9488 0%, #059669 35%, #0284c7 70%, #d97706 100%);
-  background-size: 250% auto;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: textShimmer 6s ease infinite;
-}
-
-.brand-badge-gradient {
-  background: linear-gradient(135deg, #0f766e 0%, #0d9488 50%, #0284c7 100%);
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fade-in {
-  animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@keyframes modalSlideUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px) scale(0.97);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-.animate-modal-pop {
-  animation: modalSlideUp 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@keyframes pulseGlow {
-
-  0%,
-  100% {
-    box-shadow: 0 0 12px rgba(13, 148, 136, 0.3);
-  }
-
-  50% {
-    box-shadow: 0 0 28px rgba(13, 148, 136, 0.65);
-  }
-}
-
-.pulse-glow {
-  animation: pulseGlow 2.5s infinite ease-in-out;
-}
-
-@keyframes statusRipple {
-  0% {
-    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
-  }
-
-  70% {
-    box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
-  }
-
-  100% {
-    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
-  }
-}
-
-.status-dot-active {
-  animation: statusRipple 1.8s infinite;
-}
-
-/* ================================================================
-   CARDS & INPUTS
-   ================================================================ */
 .card-hover-lift {
   transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -258,13 +63,13 @@ body {
 }
 
 .saas-input:focus {
-  border-color: var(--primary);
+  border-color: var(--primary, #0d9488);
   box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.18);
   outline: none;
 }
 
 .saas-role-tab-active {
-  background-color: var(--primary);
+  background-color: var(--primary, #0d9488);
   color: #fff;
   box-shadow: 0 4px 14px rgba(13, 148, 136, 0.35);
 }
@@ -290,9 +95,7 @@ body {
   transform: scale(0.96);
 }
 
-/* ================================================================
-   LEAFLET MAP
-   ================================================================ */
+/* Leaflet container fixes */
 .leaflet-container {
   border-radius: 1rem;
   z-index: 10;
@@ -304,9 +107,7 @@ body {
   padding: 4px;
 }
 
-/* ================================================================
-   VOICE ASSISTANT
-   ================================================================ */
+/* Voice Assistant panel overrides */
 #voice-assistant-panel.active {
   transform: translateY(0) scale(1) !important;
   opacity: 1 !important;
@@ -333,12 +134,10 @@ body {
     transform: scale(1);
     box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.8);
   }
-
   70% {
     transform: scale(1.08);
     box-shadow: 0 0 0 14px rgba(245, 158, 11, 0);
   }
-
   100% {
     transform: scale(1);
     box-shadow: 0 0 0 0 rgba(245, 158, 11, 0);
@@ -351,210 +150,6 @@ body {
   color: white !important;
 }
 
-/* Voice panel size: desktop */
-#voice-assistant-panel {
-  width: 420px;
-  height: 540px;
-  max-height: calc(100vh - 120px);
-  bottom: 90px;
-  right: 20px;
-}
-
-/* ================================================================
-   MOBILE RESPONSIVE — 375px+ phones
-   ================================================================ */
-@media (max-width: 639px) {
-
-  /* Header Navbar responsiveness */
-  .glass-header .max-w-7xl {
-    padding-left: 8px !important;
-    padding-right: 8px !important;
-  }
-
-  .global-lang-btn {
-    padding: 3px 6px !important;
-    font-size: 10px !important;
-  }
-
-  .role-btn {
-    padding: 4px 8px !important;
-    font-size: 10px !important;
-  }
-
-  /* Voice panel: full-width on mobile */
-  #voice-assistant-panel {
-    width: calc(100vw - 16px) !important;
-    height: 72vh !important;
-    max-height: calc(100vh - 120px);
-    bottom: 72px !important;
-    right: 8px !important;
-    left: 8px !important;
-    border-radius: 1.5rem !important;
-  }
-
-  /* Voice button: icon only */
-  #voice-assistant-toggle .font-extrabold {
-    display: none !important;
-  }
-
-  /* Service grid: 1 col */
-  #services-grid {
-    grid-template-columns: 1fr !important;
-  }
-
-  /* Match/Auth modal: bottom sheet on mobile */
-  #match-modal,
-  #auth-modal {
-    align-items: flex-end !important;
-  }
-
-  #match-modal-content,
-  #auth-modal-content {
-    border-radius: 1.5rem 1.5rem 0 0 !important;
-    max-height: 88vh;
-    overflow-y: auto;
-    width: 100% !important;
-  }
-
-  /* Worker dashboard: single column */
-  #worker-content .grid {
-    grid-template-columns: 1fr !important;
-  }
-
-  /* Admin content: single column */
-  #admin-content .grid {
-    grid-template-columns: 1fr !important;
-  }
-
-  /* Reduce padding on cards */
-  .rounded-3xl {
-    border-radius: 1.25rem !important;
-  }
-
-  /* Main content padding */
-  main {
-    padding-left: 12px !important;
-    padding-right: 12px !important;
-  }
-
-  /* Card hover disabled on touch */
-  .card-hover-lift:active {
-    transform: scale(0.98);
-    box-shadow: 0 8px 20px rgba(13, 148, 136, 0.12);
-  }
-}
-
-@media (max-width: 480px) {
-  .glass-header h1 {
-    font-size: 1.05rem !important;
-  }
-
-  .global-lang-btn {
-    padding: 3px 6px !important;
-    font-size: 10px !important;
-  }
-
-  .role-btn {
-    padding: 6px 4px !important;
-    font-size: 10px !important;
-  }
-
-  .cat-pill {
-    padding: 6px 10px !important;
-    font-size: 11px !important;
-  }
-
-  #sih-demo-bar {
-    width: calc(100vw - 20px) !important;
-    max-width: 520px !important;
-    padding: 6px 10px !important;
-    font-size: 10px !important;
-    backdrop-filter: blur(16px) !important;
-    -webkit-backdrop-filter: blur(16px) !important;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
-  }
-
-  #sih-demo-bar button {
-    padding: 5px 10px !important;
-    font-size: 10px !important;
-    border-radius: 9999px !important;
-  }
-}
-
-/* Table scroll wrapper */
-.table-responsive {
-  width: 100%;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-/* ================================================================
-   TABLET — 640px to 1023px
-   ================================================================ */
-@media (min-width: 640px) and (max-width: 1023px) {
-
-  #voice-assistant-panel {
-    width: 400px;
-    height: 500px;
-    bottom: 84px;
-    right: 16px;
-  }
-
-  #services-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
-  }
-
-  /* 2-col layout for worker & admin inner grids */
-  #worker-content .grid-cols-1 {
-    grid-template-columns: repeat(2, 1fr) !important;
-  }
-}
-
-/* ================================================================
-   LARGE DESKTOP — 1280px+
-   ================================================================ */
-@media (min-width: 1280px) {
-  #voice-assistant-panel {
-    width: 440px;
-    height: 560px;
-  }
-}
-
-/* ================================================================
-   GHOST MODE & RESPONSIVE DEBUG SYSTEM
-   ================================================================ */
-.ghost-nav {
-  background: rgba(8, 13, 26, 0.72) !important;
-  backdrop-filter: blur(24px) saturate(180%) !important;
-  -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
-  box-shadow: 0 10px 35px -5px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
-}
-
-.ghost-btn {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: #e2e8f0;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.ghost-btn:hover {
-  background: rgba(13, 148, 136, 0.18);
-  border-color: rgba(13, 148, 136, 0.5);
-  color: #5eead4;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 20px rgba(13, 148, 136, 0.25);
-}
-
-.ghost-pill-active {
-  background: linear-gradient(135deg, rgba(13, 148, 136, 0.25), rgba(2, 132, 199, 0.25));
-  border: 1px solid rgba(13, 148, 136, 0.4);
-  color: #5eead4;
-}
-
-/* Debug Telemetry Floating Overlay */
 #ghost-debug-telemetry {
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
@@ -563,9 +158,4 @@ body {
 #ghost-debug-telemetry.minimized {
   opacity: 0.6;
   transform: scale(0.9) translateY(10px);
-}
-
-#ghost-debug-telemetry.minimized:hover {
-  opacity: 1;
-  transform: scale(1) translateY(0);
 }

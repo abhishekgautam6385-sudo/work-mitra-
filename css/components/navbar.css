@@ -1,0 +1,119 @@
+/* ================================================================
+   WORKMITRA DESIGN SYSTEM - NAVBAR COMPONENT
+   ================================================================ */
+
+.navbar-wm {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: var(--shadow-xs);
+  transition: all 0.3s ease;
+}
+
+.navbar-wm__container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+@media (min-width: 768px) {
+  .navbar-wm__container {
+    height: var(--header-h);
+    padding: 0 24px;
+  }
+}
+
+.navbar-wm__brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.navbar-wm__logo-box {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-md);
+  padding: 2px;
+  background: linear-gradient(135deg, #0d9488, #f59e0b);
+  box-shadow: var(--shadow-sm);
+  flex-shrink: 0;
+}
+
+.navbar-wm__logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.navbar-wm__role-tabs {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .navbar-wm__role-tabs {
+    display: flex;
+    align-items: center;
+    background: var(--color-surface-hover);
+    padding: 4px;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+    gap: 4px;
+  }
+}
+
+/* Mobile bottom navigation bar for quick access */
+.mobile-bottom-nav {
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 45;
+  height: var(--bottom-nav-h);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid var(--color-border);
+  justify-content: space-around;
+  align-items: center;
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+@media (min-width: 768px) {
+  .mobile-bottom-nav {
+    display: none;
+  }
+}
+
+.mobile-bottom-nav__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  padding: 6px 12px;
+  min-width: 44px;
+  min-height: 44px;
+}
+
+.mobile-bottom-nav__item.active {
+  color: var(--color-primary);
+}

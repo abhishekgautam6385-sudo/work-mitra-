@@ -2115,3 +2115,16 @@ function processAIResponse(userText) {
     { label: '👷 Worker App', action: "setRole('worker')" }
   ]);
 }
+
+/* ---- MOBILE FOOTER ACCORDION TOGGLE ---- */
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('footer h4, .footer-wm__col-header').forEach(header => {
+    header.addEventListener('click', function() {
+      if (window.innerWidth < 640) {
+        const parent = this.parentElement;
+        parent.classList.toggle('open');
+      }
+    });
+  });
+});
+
