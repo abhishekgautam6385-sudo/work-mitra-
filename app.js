@@ -163,19 +163,24 @@ function setRole(role) {
   state.currentRole = role;
   
   document.querySelectorAll('.role-btn').forEach(btn => {
-    btn.classList.remove('bg-emerald-600', 'text-white', 'shadow-md');
-    btn.classList.add('text-slate-600', 'hover:bg-slate-100');
+    btn.classList.remove('bg-emerald-600', 'text-white', 'shadow-md', 'shadow-sm');
+    btn.classList.add('text-slate-600', 'hover:bg-slate-200');
   });
   
-  const activeBtn = document.getElementById(`role-${role}`);
-  if (activeBtn) {
-    activeBtn.classList.remove('text-slate-600', 'hover:bg-slate-100');
-    activeBtn.classList.add('bg-emerald-600', 'text-white', 'shadow-md');
+  document.querySelectorAll(`.role-${role}-btn`).forEach(activeBtn => {
+    activeBtn.classList.remove('text-slate-600', 'hover:bg-slate-200');
+    activeBtn.classList.add('bg-emerald-600', 'text-white', 'shadow-sm');
+  });
+
+  const activeBtnOld = document.getElementById(`role-${role}`);
+  if (activeBtnOld) {
+    activeBtnOld.classList.remove('text-slate-600', 'hover:bg-slate-200');
+    activeBtnOld.classList.add('bg-emerald-600', 'text-white', 'shadow-sm');
   }
 
-  document.getElementById('customer-view').classList.toggle('hidden', role !== 'customer');
-  document.getElementById('worker-view').classList.toggle('hidden', role !== 'worker');
-  document.getElementById('admin-view').classList.toggle('hidden', role !== 'admin');
+  document.getElementById('customer-view')?.classList.toggle('hidden', role !== 'customer');
+  document.getElementById('worker-view')?.classList.toggle('hidden', role !== 'worker');
+  document.getElementById('admin-view')?.classList.toggle('hidden', role !== 'admin');
 
   updateHeaderAuthBadge();
   updateNetworkBadge();
@@ -368,26 +373,28 @@ function updateHeaderAuthBadge() {
 
   if (state.currentUser) {
     container.innerHTML = `
-      <div class="flex items-center gap-1.5 sm:gap-2 bg-slate-100/90 p-1 px-2 sm:px-3 rounded-xl border border-slate-200/80 shadow-xs flex-shrink-0">
-        <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-tr from-emerald-600 to-teal-500 text-white font-bold flex items-center justify-center text-xs shadow flex-shrink-0">
-          ${state.currentUser.name.charAt(0)}
-        </div>
-        <div class="hidden sm:block text-left min-w-0">
-          <span class="font-bold text-xs text-slate-800 block leading-none truncate max-w-[100px]">${state.currentUser.name}</span>
-          <span class="text-[9px] text-emerald-700 font-extrabold uppercase tracking-wider">${state.currentUser.role}</span>
-        </div>
-        <button onclick="openSaasAuthScreen('${state.currentRole}', 'login')" title="Switch Account" class="px-2 py-1 bg-white hover:bg-slate-200 text-slate-700 font-bold text-[10px] sm:text-[11px] rounded-lg border border-slate-300 shadow-xs transition-all whitespace-nowrap">
+      <div class="flex items-center gap-1 sm:gap-1.5 bg-slate-100/90 p-0.5 sm:p-1 px-1.5 sm:px-2.5 rounded-xl border border-slate-200/80 shadow-xs flex-shrink-0">
+        <button onclick="openSaasAuthScreen('${state.currentRole}', 'login')" title="Switch Account / View Profile" class="flex items-center gap-1.5 text-left focus:outline-none">
+          <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-tr from-emerald-600 to-teal-500 text-white font-bold flex items-center justify-center text-xs shadow-xs flex-shrink-0">
+            ${state.currentUser.name.charAt(0)}
+          </div>
+          <div class="hidden md:block text-left min-w-0 leading-tight">
+            <span class="font-bold text-xs text-slate-800 block truncate max-w-[90px]">${state.currentUser.name}</span>
+            <span class="text-[9px] text-emerald-700 font-extrabold uppercase tracking-wider block">${state.currentUser.role}</span>
+          </div>
+        </button>
+        <button onclick="openSaasAuthScreen('${state.currentRole}', 'login')" title="Switch Account" class="px-2 py-1 bg-white hover:bg-slate-200 text-slate-700 font-bold text-[10px] sm:text-[11px] rounded-lg border border-slate-300 shadow-xs transition-all whitespace-nowrap hidden lg:inline-block">
           Switch
         </button>
         <button onclick="logoutCurrentSession()" title="Logout" class="w-6 h-6 sm:w-7 sm:h-7 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 flex items-center justify-center transition-colors flex-shrink-0">
-          <i class="fas fa-power-off text-xs"></i>
+          <i class="fas fa-power-off text-[11px]"></i>
         </button>
       </div>
     `;
   } else {
     container.innerHTML = `
-      <button onclick="openSaasAuthScreen('customer', 'login')" class="px-3 py-1.5 sm:px-4 sm:py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[11px] sm:text-xs rounded-xl shadow-md transition-all flex items-center gap-1.5 whitespace-nowrap">
-        <i class="fas fa-lock text-xs"></i> Login
+      <button onclick="openSaasAuthScreen('customer', 'login')" class="px-2.5 py-1.5 sm:px-3.5 sm:py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[11px] sm:text-xs rounded-xl shadow-sm transition-all flex items-center gap-1 whitespace-nowrap">
+        <i class="fas fa-lock text-xs"></i> <span>Login</span>
       </button>
     `;
   }
@@ -633,13 +640,16 @@ function renderCustomerView() {
 function filterCategory(cat, btnElement) {
   state.selectedCategory = cat;
   document.querySelectorAll('.cat-pill').forEach(btn => {
-    btn.classList.remove('bg-emerald-700', 'text-white');
+    btn.classList.remove('bg-emerald-700', 'text-white', 'shadow-sm');
     btn.classList.add('bg-slate-100', 'text-slate-700', 'hover:bg-slate-200');
   });
-  const target = btnElement || (typeof event !== 'undefined' && event ? (event.currentTarget || event.target) : null);
+  let target = btnElement || (typeof event !== 'undefined' && event ? (event.currentTarget || event.target) : null);
+  if (target && !target.classList.contains('cat-pill')) {
+    target = target.closest('.cat-pill');
+  }
   if (target && target.classList) {
     target.classList.remove('bg-slate-100', 'text-slate-700', 'hover:bg-slate-200');
-    target.classList.add('bg-emerald-700', 'text-white');
+    target.classList.add('bg-emerald-700', 'text-white', 'shadow-sm');
   }
   renderServicesCatalog();
 }
