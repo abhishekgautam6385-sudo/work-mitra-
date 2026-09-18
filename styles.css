@@ -367,3 +367,51 @@ body { padding-bottom: env(safe-area-inset-bottom, 0px); }
     height: 560px;
   }
 }
+
+/* ================================================================
+   GHOST MODE & RESPONSIVE DEBUG SYSTEM
+   ================================================================ */
+.ghost-nav {
+  background: rgba(8, 13, 26, 0.72) !important;
+  backdrop-filter: blur(24px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 10px 35px -5px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+}
+
+.ghost-btn {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #e2e8f0;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.ghost-btn:hover {
+  background: rgba(13, 148, 136, 0.18);
+  border-color: rgba(13, 148, 136, 0.5);
+  color: #5eead4;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(13, 148, 136, 0.25);
+}
+
+.ghost-pill-active {
+  background: linear-gradient(135deg, rgba(13, 148, 136, 0.25), rgba(2, 132, 199, 0.25));
+  border: 1px solid rgba(13, 148, 136, 0.4);
+  color: #5eead4;
+}
+
+/* Debug Telemetry Floating Overlay */
+#ghost-debug-telemetry {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+#ghost-debug-telemetry.minimized {
+  opacity: 0.6;
+  transform: scale(0.9) translateY(10px);
+}
+#ghost-debug-telemetry.minimized:hover {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
