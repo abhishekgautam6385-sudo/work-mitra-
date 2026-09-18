@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -97,6 +97,30 @@
 
     /* Counter animation */
     .counter { transition: all 1s ease; }
+    /* === HERO WARM WHITE === */
+    #hero {
+      background: linear-gradient(160deg, #fffbf0 0%, #fdf6e3 35%, #fff8f0 65%, #f0fdf4 100%) !important;
+    }
+    #hero h1 { color: #111827 !important; }
+    #hero p { color: #374151 !important; }
+    #hero .glass {
+      background: rgba(255,255,255,0.80) !important;
+      border: 1px solid rgba(13,148,136,0.18) !important;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.07) !important;
+    }
+    /* === FOOTER POLISH === */
+    footer ul li a {
+      font-size: 0.8125rem; color: #94a3b8;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    footer ul li a:hover { color: #5eead4; }
+    footer h4 { position: relative; padding-left: 10px; letter-spacing: 0.08em; font-size: 0.7rem; }
+    footer h4::before {
+      content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+      width: 3px; height: 14px;
+      background: linear-gradient(180deg, #0d9488, #f59e0b); border-radius: 99px;
+    }
 
     /* Hover cards */
     .feature-card {
@@ -375,15 +399,15 @@
   <!-- ===================== HERO ===================== -->
   <section id="hero" class="relative min-h-screen flex items-center pt-16 pb-10 overflow-hidden">
     <!-- Orbs -->
-    <div class="orb w-80 h-80 sm:w-[500px] sm:h-[500px] bg-emerald-500/20 -top-20 -left-20"></div>
-    <div class="orb w-60 h-60 sm:w-96 sm:h-96 bg-amber-500/15 -bottom-10 -right-10" style="animation-delay:3s"></div>
-    <div class="orb w-48 h-48 bg-cyan-500/10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" style="animation-delay:6s"></div>
+    <div class="orb w-80 h-80 sm:w-[500px] sm:h-[500px] -top-20 -left-20" style="background:rgba(13,148,136,0.11);"></div>
+    <div class="orb w-60 h-60 sm:w-96 sm:h-96 -bottom-10 -right-10" style="background:rgba(245,158,11,0.10);" style="animation-delay:3s"></div>
+    <div class="orb w-48 h-48 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" style="background:rgba(6,182,212,0.07);" style="animation-delay:6s"></div>
 
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
       <div class="max-w-4xl mx-auto text-center">
 
         <!-- Badge -->
-        <div class="fade-up delay-1 inline-flex items-center gap-2 px-4 py-2 mb-6 sm:mb-8 rounded-full glass border border-emerald-400/20 text-emerald-300 text-xs sm:text-sm font-bold">
+        <div class="fade-up delay-1 inline-flex items-center gap-2 px-4 py-2 mb-6 sm:mb-8 rounded-full text-xs sm:text-sm font-bold" style="background:rgba(255,255,255,0.90);border:1px solid rgba(13,148,136,0.25);color:#0f766e;box-shadow:0 2px 12px rgba(13,148,136,0.10);">
           <span class="relative flex h-2.5 w-2.5">
             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
             <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
@@ -392,15 +416,15 @@
         </div>
 
         <!-- Headline -->
-        <h1 class="fade-up delay-2 text-4xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight font-heading leading-[1.1] mb-4 sm:mb-6">
+        <h1 class="fade-up delay-2 text-4xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight font-heading leading-[1.1] mb-4 sm:mb-6" style="color:#111827;">
           India's First <br>
           <span class="brand-text">Zero-Commission</span><br>
-          <span class="text-white">Cooperative Platform</span>
+          <span style="color:#1f2937;">Cooperative Platform</span>
         </h1>
 
         <!-- Subtitle -->
-        <p class="fade-up delay-3 text-slate-300 text-base sm:text-lg lg:text-xl leading-relaxed mb-8 sm:mb-10 max-w-2xl mx-auto">
-          Book verified plumbers, electricians, cleaners & artisans directly from cooperative societies. Workers earn <strong class="text-emerald-300">100%</strong> of what you pay — zero middleman cuts.
+        <p class="fade-up delay-3 text-base sm:text-lg lg:text-xl leading-relaxed mb-8 sm:mb-10 max-w-2xl mx-auto" style="color:#374151;">
+          Book verified plumbers, electricians, cleaners & artisans directly from cooperative societies. Workers earn <strong style="color:#0f766e;">100%</strong> of what you pay — zero middleman cuts.
         </p>
 
         <!-- CTA Buttons -->
@@ -408,7 +432,7 @@
           <button onclick="openLogin()" class="cta-btn w-full sm:w-auto px-8 py-4 text-base font-extrabold text-white rounded-2xl shadow-2xl flex items-center justify-center gap-2">
             <i class="fas fa-rocket"></i> Book a Service Now
           </button>
-          <button onclick="openLogin('worker')" class="w-full sm:w-auto px-8 py-4 text-base font-bold text-slate-200 rounded-2xl glass border border-white/10 hover:border-emerald-400/40 hover:bg-emerald-400/05 transition-all flex items-center justify-center gap-2">
+          <button onclick="openLogin('worker')" class="w-full sm:w-auto px-8 py-4 text-base font-bold rounded-2xl border transition-all flex items-center justify-center gap-2" style="background:rgba(255,255,255,0.80);border:1.5px solid rgba(13,148,136,0.28);color:#1f2937;">
             <i class="fas fa-tools text-amber-400"></i> I'm a Worker
           </button>
         </div>
