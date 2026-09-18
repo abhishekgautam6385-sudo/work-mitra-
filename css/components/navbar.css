@@ -117,3 +117,21 @@
 .mobile-bottom-nav__item.active {
   color: var(--color-primary);
 }
+
+/* Prevent navbar item wrapping and cutoff */
+.role-btn {
+  white-space: nowrap !important;
+  flex-shrink: 0;
+}
+
+.global-lang-btn {
+  white-space: nowrap !important;
+  flex-shrink: 0;
+}
+
+@media (max-width: 480px) {
+  .role-btn {
+    font-size: 10px !important;
+    padding: 4px 6px !important;
+  }
+}
