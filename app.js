@@ -1,4 +1,4 @@
-// WorkMitra - Enterprise SaaS Standard Multi-Role Platform + PWA Support (SIH 089)
+﻿// WorkMitra - Enterprise SaaS Standard Multi-Role Platform + PWA Support (SIH 089)
 
 // Global Application & Session State
 const state = {
@@ -332,7 +332,7 @@ function setGlobalLanguage(lang) {
     voiceState.recognition.lang = (lang === 'en') ? 'en-IN' : 'hi-IN';
   }
 
-  showToast(`Language switched to ${lang === 'hi' ? 'हिंदी 🇮🇳' : lang === 'en' ? 'English 🇬🇧' : 'Hinglish 🇮🇳'}`, 'success');
+  showToast(`Language switched to ${lang === 'hi' ? 'हिंदी ' : lang === 'en' ? 'English ' : 'Hinglish '}`, 'success');
 
   // Re-render views
   renderApp();
@@ -1308,7 +1308,7 @@ function renderWorkerView() {
               </div>
 
               <div class="p-3 bg-slate-800/90 rounded-xl border border-amber-500/30">
-                <span class="text-xs font-extrabold text-amber-200 block">🎁 Yearly Professional Toolkit & Jacket Set</span>
+                <span class="text-xs font-extrabold text-amber-200 block"> Yearly Professional Toolkit & Jacket Set</span>
                 <p class="text-[11px] text-slate-300 mt-0.5">Heavy-Duty Bosch Professional Power Toolset + High-Vis Waterproof Cooperative Safety Boots & Jacket.</p>
               </div>
 
@@ -1317,7 +1317,7 @@ function renderWorkerView() {
                 <span class="text-xs font-extrabold text-amber-300">Upgraded to ₹7.5 Lakhs</span>
               </div>
 
-              <button onclick="alert('🎁 Congratulations! Your Yearly Master Artisan Toolkit & Safety Kit voucher code #WM-TOOL-2026 has been generated. Collect it from your Cooperative Federation office!')" class="w-full py-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-extrabold text-xs rounded-xl shadow-md transition-all transform active:scale-95 flex items-center justify-center gap-1.5">
+              <button onclick="alert(' Congratulations! Your Yearly Master Artisan Toolkit & Safety Kit voucher code #WM-TOOL-2026 has been generated. Collect it from your Cooperative Federation office!')" class="w-full py-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-extrabold text-xs rounded-xl shadow-md transition-all transform active:scale-95 flex items-center justify-center gap-1.5">
                 <i class="fas fa-box-open"></i> Claim Yearly Toolkit & Gift Box
               </button>
             </div>
@@ -1757,7 +1757,7 @@ function initVoiceAssistant() {
   }
 
   // Initial welcome message
-  addAssistantMessage('नमस्ते! 🙏 मैं **Mitra Voice Assistant** हूँ।\nआप मुझसे बोलकर (Mic 🎙️ दबाएं) या टाइप करके प्लंबर, बिजली मिस्त्री, सफाई या सर्विस बुकिंग की सहायता ले सकते हैं!', false);
+  addAssistantMessage('नमस्ते!  मैं **Mitra Voice Assistant** हूँ।\nआप मुझसे बोलकर (Mic ️ दबाएं) या टाइप करके प्लंबर, बिजली मिस्त्री, सफाई या सर्विस बुकिंग की सहायता ले सकते हैं!', false);
 }
 
 function toggleVoiceAssistant() {
@@ -1789,7 +1789,7 @@ function toggleVoiceTTS() {
   if (!voiceState.ttsEnabled && 'speechSynthesis' in window) {
     window.speechSynthesis.cancel();
   }
-  showToast(voiceState.ttsEnabled ? 'Voice output ON 🔊' : 'Voice output MUTED 🔇', 'success');
+  showToast(voiceState.ttsEnabled ? 'Voice output ON ' : 'Voice output MUTED ', 'success');
 }
 
 function toggleSpeechRecognition() {
@@ -2000,10 +2000,10 @@ function processAIResponse(userText) {
 
   // 1. Greetings
   if (/^(hi|hello|hey|namaste|नमस्ते|हेलो|हाय)/.test(query)) {
-    addAssistantMessage('नमस्ते! 🙏 मैं **Mitra Voice Assistant** हूँ। आप क्या सेवा ढूँढ रहे हैं?\nजैसे: **"Plumber chahiye"**, **"Electrician bulao"**, ya **"Worker portal dikhao"**.', true, [
-      { label: '🔧 Plumbing', action: "sendQuickPrompt('Plumber chahiye')" },
+    addAssistantMessage('नमस्ते!  मैं **Mitra Voice Assistant** हूँ। आप क्या सेवा ढूँढ रहे हैं?\nजैसे: **"Plumber chahiye"**, **"Electrician bulao"**, ya **"Worker portal dikhao"**.', true, [
+      { label: ' Plumbing', action: "sendQuickPrompt('Plumber chahiye')" },
       { label: '⚡ Electrical', action: "sendQuickPrompt('Electrician repair')" },
-      { label: '🧹 Cleaning', action: "sendQuickPrompt('House cleaning')" }
+      { label: ' Cleaning', action: "sendQuickPrompt('House cleaning')" }
     ]);
     return;
   }
@@ -2011,8 +2011,8 @@ function processAIResponse(userText) {
   // 2. Plumbing Services
   if (query.includes('plumb') || query.includes('tap') || query.includes('pipe') || query.includes('flush') || query.includes('leak') || query.includes('पाइप') || query.includes('नल') || query.includes('प्लंबर') || query.includes('पानी')) {
     filterCategory('Plumbing');
-    addAssistantMessage('🔧 **Plumbing Services** फ़िल्टर कर दी गई हैं! \nहमारे टॉप कोऑपरेटिव प्लंबर **Rahul Sharma** (Rating: 4.85★, Dwarka Sec 12) उपलब्ध हैं। \n• Base Price: **₹350** (0% Middleman Commission)', true, [
-      { label: '🚀 Book Plumber Now', action: "simulateQuickBooking()" }
+    addAssistantMessage(' **Plumbing Services** फ़िल्टर कर दी गई हैं! \nहमारे टॉप कोऑपरेटिव प्लंबर **Rahul Sharma** (Rating: 4.85★, Dwarka Sec 12) उपलब्ध हैं। \n• Base Price: **₹350** (0% Middleman Commission)', true, [
+      { label: ' Book Plumber Now', action: "simulateQuickBooking()" }
     ]);
     return;
   }
@@ -2021,7 +2021,7 @@ function processAIResponse(userText) {
   if (query.includes('electr') || query.includes('light') || query.includes('switch') || query.includes('short') || query.includes('wire') || query.includes('bijli') || query.includes('बिजली') || query.includes('इलेक्ट्रीशियन') || query.includes('पंखा')) {
     filterCategory('Electrical');
     addAssistantMessage('⚡ **Electrical Services** फ़िल्टर कर दी गई हैं! \nहमारे सर्टिफाइड इलेक्ट्रिशियन **Amit Verma** (4.65★, Janakpuri) उपलब्ध हैं। \n• Base Price: **₹300**', true, [
-      { label: '🚀 Book Electrician', action: "simulateQuickBooking()" }
+      { label: ' Book Electrician', action: "simulateQuickBooking()" }
     ]);
     return;
   }
@@ -2029,8 +2029,8 @@ function processAIResponse(userText) {
   // 4. House Cleaning Services
   if (query.includes('clean') || query.includes('safai') || query.includes('broom') || query.includes('sweeping') || query.includes('सफाई') || query.includes('झाड़ू') || query.includes('पोछा')) {
     filterCategory('Cleaning');
-    addAssistantMessage('🧹 **Full House Cleaning Services** फ़िल्टर की गई हैं! \nसफाई विशेषज्ञ **Pooja Devi** (4.92★) और **Suresh Kumar** तैयार हैं। \n• Deep Cleaning Rate: **₹800**', true, [
-      { label: '🚀 Book Cleaning', action: "simulateQuickBooking()" }
+    addAssistantMessage(' **Full House Cleaning Services** फ़िल्टर की गई हैं! \nसफाई विशेषज्ञ **Pooja Devi** (4.92★) और **Suresh Kumar** तैयार हैं। \n• Deep Cleaning Rate: **₹800**', true, [
+      { label: ' Book Cleaning', action: "simulateQuickBooking()" }
     ]);
     return;
   }
@@ -2038,8 +2038,8 @@ function processAIResponse(userText) {
   // 5. Appliance Repair
   if (query.includes('appliance') || query.includes('ac') || query.includes('fridge') || query.includes('repair') || query.includes('tv') || query.includes('geyser') || query.includes('एसी') || query.includes('मरम्मत')) {
     filterCategory('Appliance');
-    addAssistantMessage('📺 **AC & Appliance Repair** फ़िल्टर किया गया है! \nAC सर्विसिंग, गैस फिलिंग व फ्रिज मरम्मत के लिए हमारे एक्सपर्ट्स उपलब्ध हैं। Base price ₹500.', true, [
-      { label: '🚀 Book Appliance Fix', action: "simulateQuickBooking()" }
+    addAssistantMessage(' **AC & Appliance Repair** फ़िल्टर किया गया है! \nAC सर्विसिंग, गैस फिलिंग व फ्रिज मरम्मत के लिए हमारे एक्सपर्ट्स उपलब्ध हैं। Base price ₹500.', true, [
+      { label: ' Book Appliance Fix', action: "simulateQuickBooking()" }
     ]);
     return;
   }
@@ -2047,8 +2047,8 @@ function processAIResponse(userText) {
   // 6. Carpentry
   if (query.includes('carpent') || query.includes('door') || query.includes('furniture') || query.includes('badhai') || query.includes('बढ़ई') || query.includes('फर्नीचर') || query.includes('लकड़ी')) {
     filterCategory('Carpentry');
-    addAssistantMessage('🔨 **Carpentry & Furniture Services** फ़िल्टर कर दी गई हैं! \nMaster Carpenter **Ramesh Singh** (7+ वर्ष अनुभव) उपलब्ध हैं। Base price ₹400.', true, [
-      { label: '🚀 Book Carpenter', action: "simulateQuickBooking()" }
+    addAssistantMessage(' **Carpentry & Furniture Services** फ़िल्टर कर दी गई हैं! \nMaster Carpenter **Ramesh Singh** (7+ वर्ष अनुभव) उपलब्ध हैं। Base price ₹400.', true, [
+      { label: ' Book Carpenter', action: "simulateQuickBooking()" }
     ]);
     return;
   }
@@ -2056,9 +2056,9 @@ function processAIResponse(userText) {
   // 7. Switch to Worker Portal
   if (query.includes('worker') || query.includes('कामगार') || query.includes('वर्कर') || query.includes('पोर्टल')) {
     setRole('worker');
-    addAssistantMessage('👷 **Worker Portal** खोल दिया गया है! \nयहाँ कार्यकर्ता ऑर्डर्स स्वीकार कर सकते हैं, **Arrival/Departure OTP** सत्यापित कर सकते हैं और **Welfare Balance** देख सकते हैं।', true, [
-      { label: '🔑 Verify Arrival OTP', action: "simulateArrivalOtp()" },
-      { label: '🎉 Complete Work & Payout', action: "simulateWorkCompletion()" }
+    addAssistantMessage(' **Worker Portal** खोल दिया गया है! \nयहाँ कार्यकर्ता ऑर्डर्स स्वीकार कर सकते हैं, **Arrival/Departure OTP** सत्यापित कर सकते हैं और **Welfare Balance** देख सकते हैं।', true, [
+      { label: ' Verify Arrival OTP', action: "simulateArrivalOtp()" },
+      { label: ' Complete Work & Payout', action: "simulateWorkCompletion()" }
     ]);
     return;
   }
@@ -2066,8 +2066,8 @@ function processAIResponse(userText) {
   // 8. Switch to Admin Portal
   if (query.includes('admin') || query.includes('federation') || query.includes('cooperative society') || query.includes('एडमिन') || query.includes('सोसाइटी')) {
     setRole('admin');
-    addAssistantMessage('🏢 **Cooperative Federation Admin Dashboard** खोल दिया गया है! \nयहाँ सोसाइटी अधिकारी Fair Workload Distribution, Worker Welfare Balances और Demand Forecasting देख सकते हैं।', true, [
-      { label: '👤 Return to Customer View', action: "setRole('customer')" }
+    addAssistantMessage(' **Cooperative Federation Admin Dashboard** खोल दिया गया है! \nयहाँ सोसाइटी अधिकारी Fair Workload Distribution, Worker Welfare Balances और Demand Forecasting देख सकते हैं।', true, [
+      { label: ' Return to Customer View', action: "setRole('customer')" }
     ]);
     return;
   }
@@ -2075,7 +2075,7 @@ function processAIResponse(userText) {
   // 9. Customer View
   if (query.includes('customer') || query.includes('home') || query.includes('ग्राहक')) {
     setRole('customer');
-    addAssistantMessage('👤 **Customer View** चालू हो गया है! आप यहाँ से किसी भी सेवा के लिए वर्कर बुक कर सकते हैं।');
+    addAssistantMessage(' **Customer View** चालू हो गया है! आप यहाँ से किसी भी सेवा के लिए वर्कर बुक कर सकते हैं।');
     return;
   }
 
@@ -2083,9 +2083,9 @@ function processAIResponse(userText) {
   if (query.includes('booking') || query.includes('status') || query.includes('order') || query.includes('otp') || query.includes('ऑर्डर') || query.includes('बुकिंग')) {
     if (state.bookings && state.bookings.length > 0) {
       const b = state.bookings[0];
-      addAssistantMessage(`📋 **Active Booking Status**:\n• **Booking ID**: ${b.id}\n• **Service**: ${b.serviceName}\n• **Assigned Worker**: ${b.workerName}\n• **Status**: ${b.status}\n• **Arrival OTP**: 🔑 **${b.arrivalOtp}**\n• **Departure OTP**: 🔐 **${b.departureOtp}**`, true, [
-        { label: '🔑 Verify Arrival OTP', action: "simulateArrivalOtp()" },
-        { label: '🎉 Complete Work', action: "simulateWorkCompletion()" }
+      addAssistantMessage(` **Active Booking Status**:\n• **Booking ID**: ${b.id}\n• **Service**: ${b.serviceName}\n• **Assigned Worker**: ${b.workerName}\n• **Status**: ${b.status}\n• **Arrival OTP**:  **${b.arrivalOtp}**\n• **Departure OTP**:  **${b.departureOtp}**`, true, [
+        { label: ' Verify Arrival OTP', action: "simulateArrivalOtp()" },
+        { label: ' Complete Work', action: "simulateWorkCompletion()" }
       ]);
     } else {
       addAssistantMessage('फिलहाल कोई सक्रिय बुकिंग नहीं है। आप किसी भी सर्विस कार्ड से नयी बुकिंग ट्रिगर कर सकते हैं!');
@@ -2095,24 +2095,24 @@ function processAIResponse(userText) {
 
   // 11. Welfare Fund FAQ & Pricing
   if (query.includes('welfare') || query.includes('fund') || query.includes('insurance') || query.includes('rate') || query.includes('price') || query.includes('commission') || query.includes('वेलफेयर') || query.includes('बीमा')) {
-    addAssistantMessage('🛡️ **Worker Welfare Fund & Fair Wages (SIH 089)**:\nWorkMitra पर 0% बिचौलिया कमीशन है। 100% भुगतान सीधे कारीगरों को मिलता है। हर बुकिंग से ₹10 सीधे कार्यकर्ता के Welfare Fund में क्रेडिट होते हैं!', true, [
-      { label: '🏢 View Admin Welfare Analytics', action: "setRole('admin')" }
+    addAssistantMessage('️ **Worker Welfare Fund & Fair Wages (SIH 089)**:\nWorkMitra पर 0% बिचौलिया कमीशन है। 100% भुगतान सीधे कारीगरों को मिलता है। हर बुकिंग से ₹10 सीधे कार्यकर्ता के Welfare Fund में क्रेडिट होते हैं!', true, [
+      { label: ' View Admin Welfare Analytics', action: "setRole('admin')" }
     ]);
     return;
   }
 
   // 12. Quick Demo Match Simulation
   if (query.includes('demo') || query.includes('match') || query.includes('simulate') || query.includes('डेमो')) {
-    addAssistantMessage('🚀 **SIH Demo**: AI Fair Workload Match Engine ट्रिगर किया जा रहा है!');
+    addAssistantMessage(' **SIH Demo**: AI Fair Workload Match Engine ट्रिगर किया जा रहा है!');
     simulateQuickBooking();
     return;
   }
 
   // Default Fallback
-  addAssistantMessage('Aap WorkMitra par koi bhi service book kar sakte hain! Jaise: **"Plumber chahiye"**, **"Show Worker App"**, **"Check Active Booking"**, या **"What is Welfare Fund?"**. 🎙️ Mic dabakar boliyen!', true, [
-    { label: '🔧 Plumber', action: "sendQuickPrompt('Plumber chahiye')" },
+  addAssistantMessage('Aap WorkMitra par koi bhi service book kar sakte hain! Jaise: **"Plumber chahiye"**, **"Show Worker App"**, **"Check Active Booking"**, या **"What is Welfare Fund?"**. ️ Mic dabakar boliyen!', true, [
+    { label: ' Plumber', action: "sendQuickPrompt('Plumber chahiye')" },
     { label: '⚡ Electrician', action: "sendQuickPrompt('Electrician repair')" },
-    { label: '👷 Worker App', action: "setRole('worker')" }
+    { label: ' Worker App', action: "setRole('worker')" }
   ]);
 }
 
